@@ -8,7 +8,7 @@
 using namespace std;
 
 matriz levantarMatriz(string path){
-    /* Parsing PGM according to
+    /* Parseando PGM de acuerdo a
      * http://netpbm.sourceforge.net/doc/pgm.html
      */
     ifstream infile (path, std::ios::binary);
@@ -17,7 +17,7 @@ matriz levantarMatriz(string path){
         fail("Unable to open file.");
     }
 
-    // los 4 valores que requerimos: version w h maxVal
+    // los 4 valores que tiene el header: version w h maxVal
     vector<string> vals (4);
     int count = 0;
     while (count < 4) {
@@ -27,14 +27,13 @@ matriz levantarMatriz(string path){
         if (buff.compare(0, 1, "#") == 0) {
             // si encontré un #, ignoro hasta newline
             infile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            continue;
         } else {
-            // si no, va en vals
+            // si no, es un valor a guardar
             vals[count] = buff;
             count += 1;
         }
     }
-    // finalmente ignoro el newline
+    // finalmente ignoro el último newline
     infile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
     string version = vals[0];
@@ -48,7 +47,7 @@ matriz levantarMatriz(string path){
 
     matriz data (height, vector<int> (width));
 
-    // asumo maxVal < 256 => los pixeles son 1 byte
+    // asumo maxVal < 256 => los pixeles son 1 byte = char
     for (auto &row : data) {
         for (auto &pixel : row) {
             char c;
