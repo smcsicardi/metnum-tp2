@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <limits>
 
 #include "tipos.h"
 #include "utilities.h"
@@ -42,14 +43,14 @@ matriz levantarMatriz(string path){
     int height = std::stoi(vals[2]);
     int maxVal = std::stoi(vals[3]);
 
-    cout << "Version: " << version << endl;
-    cout << "Max val: " << maxVal << endl;
-    cout << width << " columns and " << height << " rows" << endl;
+    // cout << "Version: " << version << endl;
+    // cout << "Max val: " << maxVal << endl;
+    // cout << width << " columns and " << height << " rows" << endl;
 
-    matriz data (height, vector<int> (width));
+    matriz matrizData (height, vector<int> (width));
 
     // asumo maxVal < 256 => los pixeles son 1 byte
-    for (auto &row : data) {
+    for (auto &row : matrizData) {
         for (auto &pixel : row) {
             char c;
             infile.get(c);
@@ -59,5 +60,5 @@ matriz levantarMatriz(string path){
 
     infile.close();
 
-    return data;
+    return matrizData;
 }

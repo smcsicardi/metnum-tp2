@@ -60,3 +60,14 @@ void fail(string msg){
     cerr << msg;
     exit(1);
 }
+
+void imprimirMatriz(const matriz& m){
+    for (auto i : m){
+        for (auto j : i){
+            cout << j << " ";
+        }
+        cout << endl;
+    }
+}
+
+

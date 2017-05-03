@@ -20,7 +20,7 @@ struct ImgTest{
     ImgTest(){
     }
 
-    string path; // el numero es arbitrario
+    string path;
     int nroTest;
 };
 
