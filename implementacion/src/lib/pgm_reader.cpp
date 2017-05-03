@@ -1,47 +1,63 @@
 #include <iostream>
 #include <fstream>
-#include <sstream>
 
 #include "tipos.h"
+#include "utilities.h"
 #include "pgm_reader.h"
 
 using namespace std;
 
 matriz levantarMatriz(string path){
-    int row = 0, col = 0, numrows = 0, numcols = 0;
-    ifstream infile(path);
-    stringstream ss;
-    string inputLine = "";
+    /* Parsing PGM according to
+     * http://netpbm.sourceforge.net/doc/pgm.html
+     */
+    ifstream infile (path, std::ios::binary);
 
-    // First line : version
-    getline(infile,inputLine);
-    if(inputLine.compare("P5") != 0) cerr << "Version error" << endl;
-    else cout << "Version : " << inputLine << endl;
-
-    // Second line : comment
-    getline(infile,inputLine);
-    cout << "Comment : " << inputLine << endl;
-
-    // Continue with a stringstream
-    ss << infile.rdbuf();
-    // Third line : size
-    ss >> numcols >> numrows;
-    cout << numcols << " columns and " << numrows << " rows" << endl;
-
-    matriz array (numrows, vector<int> (numcols));
-
-    // Following lines : data
-    for(row = 0; row < numrows; ++row)
-        for (col = 0; col < numcols; ++col) ss >> array[row][col];
-
-    // Now print the array to see the result
-    for(row = 0; row < numrows; ++row) {
-        for(col = 0; col < numcols; ++col) {
-            cout << array[row][col] << " ";
-        }
-        cout << endl;
+    if (!infile.is_open()) {
+        fail("Unable to open file.");
     }
+
+    // los 4 valores que requerimos: version w h maxVal
+    vector<string> vals (4);
+    int count = 0;
+    while (count < 4) {
+        // leemos en un buffer
+        string buff;
+        infile >> buff;
+        if (buff.compare(0, 1, "#") == 0) {
+            // si encontré un #, ignoro hasta newline
+            infile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            continue;
+        } else {
+            // si no, va en vals
+            vals[count] = buff;
+            count += 1;
+        }
+    }
+    // finalmente ignoro el newline
+    infile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    string version = vals[0];
+    int width = std::stoi(vals[1]);
+    int height = std::stoi(vals[2]);
+    int maxVal = std::stoi(vals[3]);
+
+    cout << "Version: " << version << endl;
+    cout << "Max val: " << maxVal << endl;
+    cout << width << " columns and " << height << " rows" << endl;
+
+    matriz data (height, vector<int> (width));
+
+    // asumo maxVal < 256 => los pixeles son 1 byte
+    for (auto &row : data) {
+        for (auto &pixel : row) {
+            char c;
+            infile.get(c);
+            pixel = (unsigned char) c;
+        }
+    }
+
     infile.close();
 
-    return array;
+    return data;
 }

@@ -22,8 +22,14 @@ int main(int argv, char* argc[]){
     //imagen = fopen("../data/ImagenesCaras/s1/1.pgm", "r+");
 
     //int img[filas][columnas] = (int**) imagen;
-    matriz what = levantarMatriz("../data/ImagenesCaras/s1/2.pgm");
-    cout << what.size();
+    matriz what = levantarMatriz("../data/ImagenesCarasRed/s1/2.pgm");
+
+    for (auto i : what){
+        for (auto j : i){
+            cout << j << " ";
+        }
+        cout << endl;
+    }
 
     return 0;
 }

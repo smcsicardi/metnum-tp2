@@ -1,9 +1,10 @@
 #include <iostream>
 #include <vector>
+#include <cstdlib>
+
 #include "utilities.h"
 
 using namespace std;
-
 
 void levantarDatos(Input& input){
     // Primera linea
@@ -53,6 +54,9 @@ void imprimirDatos(const Input& input){
     for(auto t : input.vTests){
         cout << t.path << " " << t.nroTest << endl;
     }
+}
 
-    cout << endl;
+void fail(string msg){
+    cerr << msg;
+    exit(1);
 }
