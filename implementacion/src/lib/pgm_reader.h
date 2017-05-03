@@ -1,11 +1,8 @@
 #ifndef PGM_READER_H
 #define PGM_READER_H
 
-#include <iostream> // cout, cerr
-#include <fstream> // ifstream
-#include <sstream> // stringstream
-#include <string>
+using namespace std;
 
-int levantarMatriz(std::string path);
+matriz levantarMatriz(string path);
 
 #endif // PGM_READER_H

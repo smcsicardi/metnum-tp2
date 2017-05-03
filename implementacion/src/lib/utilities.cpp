@@ -1,3 +1,5 @@
+#include <iostream>
+#include <vector>
 #include "utilities.h"
 
 using namespace std;

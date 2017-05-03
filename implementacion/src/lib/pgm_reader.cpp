@@ -1,8 +1,13 @@
+#include <iostream>
+#include <fstream>
+#include <sstream>
+
+#include "tipos.h"
 #include "pgm_reader.h"
 
 using namespace std;
 
-int levantarMatriz(string path){
+matriz levantarMatriz(string path){
     int row = 0, col = 0, numrows = 0, numcols = 0;
     ifstream infile(path);
     stringstream ss;
@@ -23,7 +28,7 @@ int levantarMatriz(string path){
     ss >> numcols >> numrows;
     cout << numcols << " columns and " << numrows << " rows" << endl;
 
-    int array[numrows][numcols];
+    matriz array (numrows, vector<int> (numcols));
 
     // Following lines : data
     for(row = 0; row < numrows; ++row)
@@ -38,5 +43,5 @@ int levantarMatriz(string path){
     }
     infile.close();
 
-    return 0;
+    return array;
 }
