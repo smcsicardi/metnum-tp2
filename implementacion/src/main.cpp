@@ -15,8 +15,11 @@ int main(int argv, char* argc[]){
     levantarDatos(input);
     imprimirDatos(input);
 
-    matriz what = levantarMatriz("../data/ImagenesCarasRed/s1/2.pgm");
+    vector<unsigned char> what = levantarImagen("../data/ImagenesCarasRed/s1/2.pgm");
 
+    for (auto x : what){
+        cout << (int)x << ",";
+    }
     // imprimirMatriz(what);
 
     return 0;

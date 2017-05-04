@@ -8,7 +8,7 @@
 
 using namespace std;
 
-matriz levantarMatriz(string path){
+vector<unsigned char> levantarImagen(string path){
     /* Parseando PGM de acuerdo a
      * http://netpbm.sourceforge.net/doc/pgm.html
      */
@@ -46,18 +46,16 @@ matriz levantarMatriz(string path){
     // cout << "Max val: " << maxVal << endl;
     // cout << width << " columns and " << height << " rows" << endl;
 
-    matriz matrizData (height, vector<int> (width));
+    vector<unsigned char> imgData (height * width);
 
     // asumo maxVal < 256 => los pixeles son 1 byte
-    for (auto &row : matrizData) {
-        for (auto &pixel : row) {
-            char c;
-            infile.get(c);
-            pixel = (unsigned char) c;
-        }
+    for (auto &pixel : imgData) {
+        char c;
+        infile.get(c);
+        pixel = (unsigned char) c;
     }
 
     infile.close();
 
-    return matrizData;
+    return imgData;
 }
