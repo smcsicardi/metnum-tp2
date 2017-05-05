@@ -7,6 +7,8 @@
 #include "lib/tipos.h"
 #include "lib/pgm_reader.h"
 #include "lib/utilities.h"
+#include "lib/linalg.h"
+#include "lib/parser.h"
 
 using namespace std;
 
