@@ -11,7 +11,8 @@
 using namespace std;
 
 void levantarDatos(Input& input);
-Matriz obtenerMatrizM(const Matriz& vX);
-Matriz generarMatrizM(const Input& input, int persona);
+Matriz obtenerMatrizM(const Input& input, int persona);
+Matriz multiplicarXtX(const Matriz& vX);
+MatricesM obtenerTodasMatricesM(const Input& input);
 
 #endif

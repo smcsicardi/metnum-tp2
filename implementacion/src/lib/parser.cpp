@@ -34,7 +34,7 @@ void levantarDatos(Input& input){
     }
 }
 
-Matriz generarMatrizM(const Input& input, int persona){
+Matriz obtenerMatrizM(const Input& input, int persona){
     int size = input.filas * input.columnas;
     vector<double> mu (size);
     vector<imagen> imagenes (input.cantImgPorPers);
@@ -59,12 +59,12 @@ Matriz generarMatrizM(const Input& input, int persona){
     }
 
     // (xi - u)^t * (xi - u) / (n-1)
-    Matriz M = obtenerMatrizM(X);
+    Matriz M = multiplicarXtX(X);
 
     return M;
 }
 
-Matriz obtenerMatrizM(const Matriz& X){
+Matriz multiplicarXtX(const Matriz& X){
     Matriz M(X.columnas, X.columnas);
     double d = 1 / (double)(X.filas);
 
@@ -75,4 +75,14 @@ Matriz obtenerMatrizM(const Matriz& X){
     }
 
     return M;
+}
+
+MatricesM obtenerTodasMatricesM(const Input& input){
+    MatricesM mm;
+
+    for(int i = 0; i < input.cantPersonas; i++){
+        mm.vM.push_back(obtenerMatrizM(input, i));
+    }
+
+    return mm;
 }

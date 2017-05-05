@@ -45,7 +45,12 @@ int main(int argv, char* argc[]){
     // obtenerMatrizM(m,x);
 
     // cout << endl << "matrix m" << endl;
-    imprimirMatriz(generarMatrizM(input, 0));
+    
+    // imprimirMatriz(obtenerMatrizM(input, 0));
+
+    MatricesM mm = obtenerTodasMatricesM(input);
+
+    cout << "cantidad de matrices M = " << mm.vM.size() << endl;
 
     return 0;
 }

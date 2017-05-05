@@ -55,4 +55,16 @@ struct Input{
     vector<ImgTest> vTests;
 };
 
+struct MatricesM{
+    vector<Matriz> vM;
+};
+
+struct AutoValorYVector{
+    AutoValorYVector(){
+        this->autoValor = -1.00;
+    }
+    double autoValor;
+    vector<double> autoVector;
+};
+
 #endif

@@ -37,3 +37,45 @@ double prodInterno(const Matriz& a, const Matriz& b, int i, int j, unsigned int 
 
     return suma;
 }
+
+AutoValorYVector metodoPotencia(const Matriz& A, const vector<double>& x, int cantIter){
+    AutoValorYVector lambdaVector;
+
+    // for(int i = 0; i < cantIter; i++){
+
+    // }
+
+    return lambdaVector;
+}
+
+double normaInf(const vector<double>& v){
+    double suma = 0;
+
+    for(auto val : v){
+        suma = abs(val) > suma ? abs(val) : suma;
+    }
+
+    return suma;
+}
+
+double normaUno(const vector<double>& v){
+    double suma = 0;
+
+    for(auto val : v){
+        suma += abs(val);
+    }
+
+    return suma;
+}
+
+double normaDos(const vector<double>& v){
+    double suma = 0;
+
+    for(auto val : v){
+        suma += val*val;
+    }
+
+    sqrt(suma);
+
+    return suma;
+}
