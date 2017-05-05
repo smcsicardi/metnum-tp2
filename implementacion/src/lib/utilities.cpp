@@ -85,7 +85,7 @@ Matriz generarMatrizM(const Input& input, int persona){
     }
 
     // promedio: u = (x1 +...+ xn)/n
-    multiplicarVectorPorEscalar(mu, 1 / input.cantImgPorPers);
+    multiplicarVectorPorEscalar(mu, 1 / (double)input.cantImgPorPers);
 
     // (xi - u)
     for(auto i = 0; i < input.cantImgPorPers; i++){

@@ -34,25 +34,16 @@ struct Matriz{
 };
 
 struct ImgBase{
-    ImgBase(){
-    }
-
     string persona;
     vector<int> nroImagen;
 };
 
 struct ImgTest{
-    ImgTest(){
-    }
-
     string path;
     int nroTest;
 };
 
 struct Input{
-    Input(){
-    }
-
     string path;
     int filas;
     int columnas;
