@@ -122,3 +122,20 @@ double prodInterno(const vector<double>& v1, const vector<double>& v2){
 
     return suma;
 }
+
+Matriz deflacion(const Matriz& A, double autoValor, const vector<double>& autoVector){
+    if(A.filas != (int)autoVector.size()){
+        fail("deflacion: La matriz tiene un tamaño de fila distinto del autovector");
+    }
+
+    // genero lambda * v * v^t
+    Matriz B(autoVector.size(), autoVector.size());
+    for(unsigned int i = 0; i < autoVector.size(); i++){
+        for(unsigned int j = 0; i < autoVector.size(); i++){
+            B.datos[i][j] = autoValor * autoVector[i] * autoVector[j];
+        }
+    }
+
+    // Devuelvo la matriz A - lambda*v*v^t
+    return A - B;
+}

@@ -31,6 +31,25 @@ struct Matriz{
         return c;
     }
 
+    Matriz operator-(const Matriz& other) const
+    {
+        Matriz c = Matriz(this->filas, this->columnas);
+
+        for (auto i = 0; i < this->filas; i++) {
+            for (auto j = 0; j < this->columnas; j++) {
+                c.datos[i][j] = this->datos[i][j] - other.datos[i][j];
+            }
+        }
+
+        return c;
+    }
+
+    void operator=(const Matriz& other){
+        this->filas = other.filas;
+        this->columnas = other.columnas;
+        this->datos = other.datos;
+    }
+
 };
 
 struct ImgBase{

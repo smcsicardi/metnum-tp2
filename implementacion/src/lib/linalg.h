@@ -4,9 +4,9 @@
 #include <iostream>
 #include <vector>
 #include <cstdlib>
+#include <cmath>
 #include "tipos.h"
 #include "utilities.h"
-#include <cmath>
 
 using namespace std;
 
