@@ -40,3 +40,8 @@ void imprimirMatriz(const Matriz& m){
     }
 }
 
+void imprimirVector(const vector<double>& v){
+    for (auto i : v){
+        cout << i << " " << endl;
+    }
+}

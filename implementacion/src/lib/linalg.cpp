@@ -28,7 +28,7 @@ void sumarYAgregarAVector(vector<double>& v, const vector<unsigned char>& imgCha
     }
 }
 
-double prodInterno(const Matriz& a, const Matriz& b, int i, int j, unsigned int size){
+double prodInternoXtX(const Matriz& a, const Matriz& b, int i, int j, unsigned int size){
     double suma = 0;
 
     for(unsigned int k = 0; k < size; k++){
@@ -38,14 +38,31 @@ double prodInterno(const Matriz& a, const Matriz& b, int i, int j, unsigned int 
     return suma;
 }
 
-AutoValorYVector metodoPotencia(const Matriz& A, const vector<double>& x, int cantIter){
-    AutoValorYVector lambdaVector;
+EigenVV metodoPotencia(const Matriz& A, int cantIter){
+    EigenVV eigen;
 
-    // for(int i = 0; i < cantIter; i++){
+    // Genero un vector random para calcular el metodo.
+    vector<double> vRand;
+    for(int i = 0; i < A.filas; i++){
+        vRand.push_back(rand() % 100);
+    }
 
-    // }
+    for(int i = 0; i < cantIter; i++){
+        // Calculo A*v
+        vector<double> b = matrizXVector(A,vRand);
 
-    return lambdaVector;
+        // Lo normalizo
+        double norma = 1 / normaDos(b);
+        multiplicarVectorPorEscalar(b,norma);    
+        vRand = b;
+    }
+
+    // lambda = v^t * (A * v) / (v^t * v)
+    vector<double> Av = matrizXVector(A,vRand);
+    eigen.autoValor = prodInterno(Av, vRand) / prodInterno(vRand, vRand);
+    eigen.autoVector = vRand;
+
+    return eigen;
 }
 
 double normaInf(const vector<double>& v){
@@ -74,8 +91,34 @@ double normaDos(const vector<double>& v){
     for(auto val : v){
         suma += val*val;
     }
-
     sqrt(suma);
+
+    return suma;
+}
+
+vector<double> matrizXVector(const Matriz& A, const vector<double>& x){
+    vector<double> b;
+
+    if((A.filas == 0 && A.columnas == 0) || (A.filas != (int)(x.size()))){
+        fail("MatrizXVector: matriz vacia o distintos tamaños entre fila de matriz y vector.");
+    }
+
+    for(auto m : A.datos){
+        b.push_back(prodInterno(m, x));
+    }
+
+    return b;
+}
+
+double prodInterno(const vector<double>& v1, const vector<double>& v2){
+    double suma = 0;
+    if(v1.size() != v2.size()){
+        fail("prodInterno: vectores de distintos tamaños");
+    }
+
+    for(unsigned int i = 0; i < v1.size(); i++){
+        suma += v1[i] * v2[i];
+    }
 
     return suma;
 }

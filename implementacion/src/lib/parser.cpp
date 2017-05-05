@@ -70,7 +70,7 @@ Matriz multiplicarXtX(const Matriz& X){
 
     for(auto i = 0; i < X.columnas; i++){
         for(auto j = 0; j < X.columnas; j++){
-            M.datos[i][j] = prodInterno(X, X, i, j, X.filas) * d;
+            M.datos[i][j] = prodInternoXtX(X, X, i, j, X.filas) * d;
         }
     }
 

@@ -59,8 +59,8 @@ struct MatricesM{
     vector<Matriz> vM;
 };
 
-struct AutoValorYVector{
-    AutoValorYVector(){
+struct EigenVV{
+    EigenVV(){
         this->autoValor = -1.00;
     }
     double autoValor;

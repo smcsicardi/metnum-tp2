@@ -6,5 +6,6 @@
 void imprimirDatos(const Input& input);
 void imprimirMatriz(const Matriz& m);
 void fail(string msg);
+void imprimirVector(const vector<double>& v);
 
 #endif // UTILITIES_H

@@ -49,9 +49,13 @@ int main(int argv, char* argc[]){
     // imprimirMatriz(obtenerMatrizM(input, 0));
 
     MatricesM mm = obtenerTodasMatricesM(input);
-
     cout << "cantidad de matrices M = " << mm.vM.size() << endl;
+
+    EigenVV e = metodoPotencia(mm.vM[0], 100);
+
+    cout << endl << "auto valor = " << e.autoValor << endl;
+    cout << "auto vector = ";
+    imprimirVector(e.autoVector);
 
     return 0;
 }
-
