@@ -12,9 +12,10 @@ vector<unsigned char> levantarImagen(string path){
     /* Parseando PGM de acuerdo a
      * http://netpbm.sourceforge.net/doc/pgm.html
      */
-    ifstream infile (path, std::ios::binary);
+    ifstream infile (path, ios::binary);
 
     if (!infile.is_open()) {
+        cout << "path = " << path << endl;
         fail("Unable to open file.");
     }
 
@@ -27,7 +28,7 @@ vector<unsigned char> levantarImagen(string path){
         infile >> buff;
         if (buff.compare(0, 1, "#") == 0) {
             // si encontré un #, ignoro hasta newline
-            infile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            infile.ignore(numeric_limits<streamsize>::max(), '\n');
         } else {
             // si no, es un valor a guardar
             vals[count] = buff;
@@ -35,12 +36,16 @@ vector<unsigned char> levantarImagen(string path){
         }
     }
     // finalmente ignoro el último newline
-    infile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    infile.ignore(numeric_limits<streamsize>::max(), '\n');
 
     string version = vals[0];
-    int width = std::stoi(vals[1]);
-    int height = std::stoi(vals[2]);
-    int maxVal = std::stoi(vals[3]);
+    int width = stoi(vals[1]);
+    int height = stoi(vals[2]);
+    // int maxVal = stoi(vals[3]);
+
+    if(version.compare("P5") != 0){
+        fail("No es P5");
+    }
 
     // cout << "Version: " << version << endl;
     // cout << "Max val: " << maxVal << endl;

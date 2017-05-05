@@ -5,10 +5,9 @@
 
 using namespace std;
 
-#define matriz vector<vector<int>>
+#define matriz vector<vector<double>>
 
 struct ImgBase{
-
     ImgBase(){
     }
 
