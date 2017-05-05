@@ -8,7 +8,7 @@
 
 using namespace std;
 
-vector<unsigned char> levantarImagen(string path){
+imagen levantarImagen(string path){
     /* Parseando PGM de acuerdo a
      * http://netpbm.sourceforge.net/doc/pgm.html
      */
@@ -51,7 +51,7 @@ vector<unsigned char> levantarImagen(string path){
     // cout << "Max val: " << maxVal << endl;
     // cout << width << " columns and " << height << " rows" << endl;
 
-    vector<unsigned char> imgData (height * width);
+    imagen imgData (height * width);
 
     // asumo maxVal < 256 => los pixeles son 1 byte
     for (auto &pixel : imgData) {

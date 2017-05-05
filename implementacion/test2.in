@@ -1,7 +1,6 @@
-../data/ 4 3 2 1 15
+../data/ 4 3 1 2 15
 
-imgtest/ 1
-imgtest/ 2
+imgtest/ 1 2
 
 2
 ../data/ImagenesCaras/s1/9.pgm 1

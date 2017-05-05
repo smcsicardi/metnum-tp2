@@ -5,7 +5,33 @@
 
 using namespace std;
 
-#define matriz vector<vector<double>>
+#define imagen vector<unsigned char>
+
+struct Matriz{
+    int filas;
+    int columnas;
+    vector<vector<double>> datos;
+
+    Matriz(int filas, int columnas){
+        this->filas = filas;
+        this->columnas = columnas;
+        this->datos = vector<vector<double>> (filas, vector<double> (columnas));
+    }
+
+    Matriz operator+(const Matriz& other) const
+    {
+        Matriz c = Matriz(this->filas, this->columnas);
+
+        for (auto i = 0; i < this->filas; i++) {
+            for (auto j = 0; j < this->columnas; j++) {
+                c.datos[i][j] = this->datos[i][j] + other.datos[i][j];
+            }
+        }
+
+        return c;
+    }
+
+};
 
 struct ImgBase{
     ImgBase(){

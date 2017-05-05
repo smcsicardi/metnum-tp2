@@ -6,15 +6,14 @@
 
 void levantarDatos(Input& input);
 void imprimirDatos(const Input& input);
-void fail(string msg);
-void imprimirMatriz(const matriz& m);
+void imprimirMatriz(const Matriz& m);
 
-double prodInterno(const matriz& a, const matriz& b, int i, int j, unsigned int size);
+double prodInterno(const Matriz& a, const Matriz& b, int i, int j, unsigned int size);
 void sumarAProm(vector<double>& a, const vector<unsigned char>& b);
 void sumarYAgregarAVector(vector<double>& v, const vector<unsigned char>& imgChar, const vector<double>& vProm);
 void multiplicarVectorPorEscalar(vector<double>& a, const double escalar);
-void obtenerMatrizM(matriz& M, const matriz& vX);
+Matriz obtenerMatrizM(const Matriz& vX);
 
-matriz generarMatrizM(const Input& input);
+Matriz generarMatrizM(const Input& input, int persona);
 
 #endif // UTILITIES_H

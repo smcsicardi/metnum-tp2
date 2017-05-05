@@ -3,6 +3,6 @@
 
 using namespace std;
 
-vector<unsigned char> levantarImagen(string path);
+imagen levantarImagen(string path);
 
 #endif // PGM_READER_H

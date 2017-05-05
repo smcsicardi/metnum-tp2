@@ -43,7 +43,7 @@ int main(int argv, char* argc[]){
     // obtenerMatrizM(m,x);
 
     // cout << endl << "matrix m" << endl;
-    imprimirMatriz(generarMatrizM(input));
+    imprimirMatriz(generarMatrizM(input, 0));
 
     return 0;
 }
