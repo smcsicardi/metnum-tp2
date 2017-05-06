@@ -38,28 +38,28 @@ double prodInternoXtX(const Matriz& a, const Matriz& b, int i, int j, unsigned i
     return suma;
 }
 
-EigenVV metodoPotencia(const Matriz& A, int cantIter){
+EigenVV metodoPotencia(const Matriz& B, int cantIter){
     EigenVV eigen;
 
     // Genero un vector random para calcular el metodo.
-    vector<double> vRand;
-    for(int i = 0; i < A.filas; i++){
-        vRand.push_back(rand() % 100);
-    }
+    vector<double> vRand (B.filas, 1);
+    // for(int i = 0; i < B.filas; i++){
+    //     vRand.push_back(rand() % 100);
+    // }
 
     for(int i = 0; i < cantIter; i++){
-        // Calculo A*v
-        vector<double> b = matrizXVector(A,vRand);
+        // Calculo B*v
+        vector<double> b = matrizXVector(B, vRand);
 
         // Lo normalizo
         double norma = 1 / normaDos(b);
-        multiplicarVectorPorEscalar(b,norma);    
+        multiplicarVectorPorEscalar(b, norma);    
         vRand = b;
     }
 
     // lambda = v^t * (A * v) / (v^t * v)
-    vector<double> Av = matrizXVector(A,vRand);
-    eigen.autoValor = prodInterno(Av, vRand) / prodInterno(vRand, vRand);
+    vector<double> Bv = matrizXVector(B, vRand);
+    eigen.autoValor = prodInterno(Bv, vRand) / prodInterno(vRand, vRand);
     eigen.autoVector = vRand;
 
     return eigen;

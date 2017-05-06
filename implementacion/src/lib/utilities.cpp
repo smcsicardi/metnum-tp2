@@ -3,6 +3,7 @@
 #include <cstdlib>
 
 #include "utilities.h"
+#include <iomanip> // Libreria para el padding
 
 using namespace std;
 
@@ -31,17 +32,19 @@ void fail(string msg){
     exit(1);
 }
 
-void imprimirMatriz(const Matriz& m){
-    for (auto i : m.datos){
-        for (auto j : i){
-            cout << j << " ";
-        }
-        cout << endl;
-    }
-}
-
 void imprimirVector(const vector<double>& v){
     for (auto i : v){
         cout << i << " " << endl;
+    }   
+}
+
+void imprimirMatriz(const Matriz &A){
+    cerr << fixed << setprecision(3);
+    for (auto i : A.datos) {
+        for (auto j : i) {
+            cerr << setfill(' ') << setw(11) << j;
+        }
+        cerr << endl;
     }
+    cerr << endl;
 }

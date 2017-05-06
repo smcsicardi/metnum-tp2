@@ -46,15 +46,13 @@ int main(int argv, char* argc[]){
 
     // cout << endl << "matrix m" << endl;
     
-    // imprimirMatriz(obtenerMatrizM(input, 0));
+    imprimirMatriz(obtenerMatrizM(input));
 
-    MatricesM mm = obtenerTodasMatricesM(input);
-    cout << "cantidad de matrices M = " << mm.vM.size() << endl;
-
-    EigenVV e = metodoPotencia(mm.vM[0], 100);
+    EigenVV e = metodoPotencia(obtenerMatrizM(input), 10000);
 
     cout << endl << "auto valor = " << e.autoValor << endl;
     cout << "auto vector = ";
+    multiplicarVectorPorEscalar(e.autoVector, 2.0);
     imprimirVector(e.autoVector);
 
     return 0;

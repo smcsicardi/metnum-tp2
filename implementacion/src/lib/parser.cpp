@@ -34,27 +34,36 @@ void levantarDatos(Input& input){
     }
 }
 
-Matriz obtenerMatrizM(const Input& input, int persona){
+Matriz obtenerMatrizM(const Input& input){
     int size = input.filas * input.columnas;
+    int cantImagenesTotales = input.cantImgPorPers*input.cantPersonas;
     vector<double> mu (size);
-    vector<imagen> imagenes (input.cantImgPorPers);
-    Matriz X(input.cantImgPorPers, size);
-    ImgBase base = input.vBase[persona];
+    vector<imagen> imagenes (cantImagenesTotales);
+    Matriz X(input.cantImgPorPers * input.cantPersonas, size);
 
     // levanto todas las imagenes y a medida que lo voy haciendo
     // calculo la suma para la imagen promedio.
-    for(auto j = 0; j < input.cantImgPorPers; j++){
-        imagenes[j] = levantarImagen(input.path + base.persona + to_string(base.nroImagen[j]) + ".pgm");
-        sumarAProm(mu, imagenes[j]);
+    int count = 0;
+    for(auto i = 0; i < input.cantPersonas; i++){
+        for(auto j = 0; j < input.cantImgPorPers; j++){
+            imagenes[count] = levantarImagen(input.path + input.vBase[i].persona + to_string(input.vBase[i].nroImagen[j]) + ".pgm");
+            sumarAProm(mu, imagenes[count++]);
+        }
     }
 
+    cout << "imprimir u" << endl;
+    imprimirVector(mu);
+
     // promedio: u = (x1 +...+ xn)/n
-    multiplicarVectorPorEscalar(mu, 1 / (double)input.cantImgPorPers);
+    multiplicarVectorPorEscalar(mu, 1 / (double)cantImagenesTotales);
+
+    cout << "imprimir u" << endl;
+    imprimirVector(mu);    
 
     // (xi - u)
-    for(auto i = 0; i < input.cantImgPorPers; i++){
+    for(auto i = 0; i < cantImagenesTotales; i++){
         for (auto j = 0; j < size; j++) {
-            X.datos[i][j] = imagenes[i][j] - mu[j];
+            X.datos[i][j] = (double)imagenes[i][j] - mu[j];
         }
     }
 
@@ -66,7 +75,7 @@ Matriz obtenerMatrizM(const Input& input, int persona){
 
 Matriz multiplicarXtX(const Matriz& X){
     Matriz M(X.columnas, X.columnas);
-    double d = 1 / (double)(X.filas);
+    double d = 1 / (double)(X.filas - 1);
 
     for(auto i = 0; i < X.columnas; i++){
         for(auto j = 0; j < X.columnas; j++){
@@ -75,14 +84,4 @@ Matriz multiplicarXtX(const Matriz& X){
     }
 
     return M;
-}
-
-MatricesM obtenerTodasMatricesM(const Input& input){
-    MatricesM mm;
-
-    for(int i = 0; i < input.cantPersonas; i++){
-        mm.vM.push_back(obtenerMatrizM(input, i));
-    }
-
-    return mm;
 }

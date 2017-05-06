@@ -74,10 +74,6 @@ struct Input{
     vector<ImgTest> vTests;
 };
 
-struct MatricesM{
-    vector<Matriz> vM;
-};
-
 struct EigenVV{
     EigenVV(){
         this->autoValor = -1.00;

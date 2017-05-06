@@ -4,8 +4,8 @@
 #include "tipos.h"
 
 void imprimirDatos(const Input& input);
-void imprimirMatriz(const Matriz& m);
 void fail(string msg);
 void imprimirVector(const vector<double>& v);
+void imprimirMatriz(const Matriz &A);
 
 #endif // UTILITIES_H
