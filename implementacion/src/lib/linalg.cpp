@@ -1,4 +1,5 @@
 #include "linalg.h"
+#include "time.h"
 
 using namespace std;
 
@@ -12,7 +13,7 @@ void sumarAProm(vector<double>& a, const imagen& b){
     }
 }
 
-void multiplicarVectorPorEscalar(vector<double>& v, const double escalar){
+void vectorPorEscalar(vector<double>& v, const double escalar){
     for(unsigned int i = 0; i < v.size(); i++){
         v[i] *= escalar;
     }
@@ -39,12 +40,15 @@ double prodInternoXtX(const Matriz& a, const Matriz& b, int i, int j, unsigned i
 }
 
 EigenVV metodoPotencia(const Matriz& B, int cantIter){
-    EigenVV eigen;
+    EigenVV e;
 
     // Genero un vector random para calcular el metodo.
-    vector<double> vRand (B.filas, 1);
+    vector<double> vRand(B.filas, 1);
+    // vector<double> vRand;
     // for(int i = 0; i < B.filas; i++){
-    //     vRand.push_back(rand() % 100);
+        // srand((unsigned)time(0));
+        // vRand.push_back((double)(rand() % 10000));
+        // vRand.push_back(i);
     // }
 
     for(int i = 0; i < cantIter; i++){
@@ -52,17 +56,17 @@ EigenVV metodoPotencia(const Matriz& B, int cantIter){
         vector<double> b = matrizXVector(B, vRand);
 
         // Lo normalizo
-        double norma = 1 / normaDos(b);
-        multiplicarVectorPorEscalar(b, norma);    
+        double norma = 1.00 / normaDos(b);
+        vectorPorEscalar(b, norma);    
         vRand = b;
     }
 
-    // lambda = v^t * (A * v) / (v^t * v)
+    // lambda = v^t * (B * v) / (v^t * v)
     vector<double> Bv = matrizXVector(B, vRand);
-    eigen.autoValor = prodInterno(Bv, vRand) / prodInterno(vRand, vRand);
-    eigen.autoVector = vRand;
+    e.autoValor = prodInterno(Bv, vRand) / prodInterno(vRand, vRand);
+    e.autoVector = vRand;
 
-    return eigen;
+    return e;
 }
 
 double normaInf(const vector<double>& v){
@@ -86,14 +90,13 @@ double normaUno(const vector<double>& v){
 }
 
 double normaDos(const vector<double>& v){
-    double suma = 0;
-
-    for(auto val : v){
-        suma += val*val;
+    vector<double> s = v;
+    for(auto& val : s){
+        val = val*val;
     }
-    sqrt(suma);
+    double suma = kahan(s);
 
-    return suma;
+    return sqrt(suma);
 }
 
 vector<double> matrizXVector(const Matriz& A, const vector<double>& x){
@@ -123,19 +126,32 @@ double prodInterno(const vector<double>& v1, const vector<double>& v2){
     return suma;
 }
 
-Matriz deflacion(const Matriz& A, double autoValor, const vector<double>& autoVector){
-    if(A.filas != (int)autoVector.size()){
+Matriz deflacion(const Matriz& A, const EigenVV& e){
+    int size = e.autoVector.size();
+    if(A.filas != size){
         fail("deflacion: La matriz tiene un tamaño de fila distinto del autovector");
     }
 
     // genero lambda * v * v^t
-    Matriz B(autoVector.size(), autoVector.size());
-    for(unsigned int i = 0; i < autoVector.size(); i++){
-        for(unsigned int j = 0; i < autoVector.size(); i++){
-            B.datos[i][j] = autoValor * autoVector[i] * autoVector[j];
+    Matriz B(size, size);
+    for(int i = 0; i < size; i++){
+        for(int j = 0; j < size; j++){
+            B.datos[i][j] = e.autoValor * e.autoVector[i] * e.autoVector[j];
         }
     }
 
     // Devuelvo la matriz A - lambda*v*v^t
     return A - B;
+}
+
+double kahan(vector<double> v){
+    double sum = 0.0;
+    double c = 0.0;
+    for (int i = 0; i < v.size(); i++){
+        double y = v[i] - c;
+        double t = sum + y;
+        c = (t - sum) - y;
+        sum = t;
+    }
+    return sum;
 }

@@ -33,9 +33,11 @@ void fail(string msg){
 }
 
 void imprimirVector(const vector<double>& v){
+    cerr << fixed << setprecision(3);
     for (auto i : v){
-        cout << i << " " << endl;
-    }   
+        cerr << setfill(' ') << setw(11) << i;
+    }
+    cout << endl;
 }
 
 void imprimirMatriz(const Matriz &A){

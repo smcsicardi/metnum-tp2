@@ -55,7 +55,7 @@ Matriz obtenerMatrizM(const Input& input){
     imprimirVector(mu);
 
     // promedio: u = (x1 +...+ xn)/n
-    multiplicarVectorPorEscalar(mu, 1 / (double)cantImagenesTotales);
+    vectorPorEscalar(mu, 1 / (double)cantImagenesTotales);
 
     cout << "imprimir u" << endl;
     imprimirVector(mu);    

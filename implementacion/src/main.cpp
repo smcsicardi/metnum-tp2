@@ -13,9 +13,9 @@
 using namespace std;
 
 int main(int argv, char* argc[]){
-    Input input;
+    // Input input;
 
-    levantarDatos(input);
+    // levantarDatos(input);
     // imprimirDatos(input);
 
     // matriz M = generarMatrizM(input);
@@ -46,14 +46,66 @@ int main(int argv, char* argc[]){
 
     // cout << endl << "matrix m" << endl;
     
-    imprimirMatriz(obtenerMatrizM(input));
+    // imprimirMatriz(obtenerMatrizM(input));
 
-    EigenVV e = metodoPotencia(obtenerMatrizM(input), 10000);
+    // EigenVV e = metodoPotencia(obtenerMatrizM(input), 10000);
+    
+    Matriz A(3,3);
 
-    cout << endl << "auto valor = " << e.autoValor << endl;
+    A.datos[0][0] = 5;
+    A.datos[0][1] = 3;
+    A.datos[0][2] = 3;
+    A.datos[1][0] = 3;
+    A.datos[1][1] = 1;
+    A.datos[1][2] = 0;
+    A.datos[2][0] = 3;
+    A.datos[2][1] = 0;
+    A.datos[2][2] = 1;
+
+    Matriz A2(3,3);
+
+    A2.datos[0][0] = 1;
+    A2.datos[0][1] = 0;
+    A2.datos[0][2] = 2;
+
+    A2.datos[1][0] = 0;
+    A2.datos[1][1] = 1;
+    A2.datos[1][2] = 0;
+    
+    A2.datos[2][0] = 2;
+    A2.datos[2][1] = 0;
+    A2.datos[2][2] = 1;
+
+    cout << "imprimo matriz A2" << endl;
+    imprimirMatriz(A2);
+
+    EigenVV e1 = metodoPotencia(A2, 10000);
+
+    cout << endl << "auto valor = " << e1.autoValor << endl;
     cout << "auto vector = ";
-    multiplicarVectorPorEscalar(e.autoVector, 2.0);
-    imprimirVector(e.autoVector);
+    imprimirVector(e1.autoVector);
+
+    cout << endl;
+
+    cout << "imprimo matriz B" << endl;
+    Matriz B = deflacion(A2, e1);
+    imprimirMatriz(B);
+
+    EigenVV e2 = metodoPotencia(B, 10000);
+    cout << endl << "auto valor = " << e2.autoValor << endl;
+    cout << "auto vector = ";
+    imprimirVector(e2.autoVector);
+
+    cout << endl;
+
+    cout << "imprimo matriz C" << endl;
+    Matriz C = deflacion(B, e2);
+    imprimirMatriz(C);
+
+    EigenVV e3 = metodoPotencia(C, 10000);
+    cout << endl << "auto valor = " << e3.autoValor << endl;
+    cout << "auto vector = ";
+    imprimirVector(e3.autoVector);
 
     return 0;
 }
