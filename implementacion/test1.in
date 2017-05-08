@@ -1,7 +1,10 @@
-../data/ImagenesCaras/ 112 92 2 5 15
+../data/ImagenesCarasRed/ 23 28 5 5 1
 
-s1/ 2 4 7 8 10
-s2/ 2 4 1 8 3
+s1/ 1 2 3 4 5
+s2/ 1 2 3 4 5
+s3/ 1 2 3 4 5
+s4/ 1 2 3 4 5
+s5/ 1 2 3 4 5
 
 2
 ../data/ImagenesCaras/s1/9.pgm 1

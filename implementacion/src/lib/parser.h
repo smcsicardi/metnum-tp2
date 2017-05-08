@@ -10,7 +10,7 @@
 
 using namespace std;
 
-void levantarDatos(Input& input);
+Input levantarDatos();
 Matriz obtenerMatrizM(const Input& input);
 Matriz multiplicarXtX(const Matriz& vX);
 

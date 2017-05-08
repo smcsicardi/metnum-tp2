@@ -3,8 +3,9 @@
 using namespace std;
 
 
-void levantarDatos(Input& input){
+Input levantarDatos(){
     // Primera linea
+    Input input;
     cin >> input.path;
     cin >> input.filas;
     cin >> input.columnas;
@@ -32,6 +33,7 @@ void levantarDatos(Input& input){
         cin >> t.nroTest;
         input.vTests.push_back(t);
     }
+    return input;
 }
 
 Matriz obtenerMatrizM(const Input& input){
@@ -51,14 +53,8 @@ Matriz obtenerMatrizM(const Input& input){
         }
     }
 
-    cout << "imprimir u" << endl;
-    imprimirVector(mu);
-
     // promedio: u = (x1 +...+ xn)/n
     vectorPorEscalar(mu, 1 / (double)cantImagenesTotales);
-
-    cout << "imprimir u" << endl;
-    imprimirVector(mu);    
 
     // (xi - u)
     for(auto i = 0; i < cantImagenesTotales; i++){
