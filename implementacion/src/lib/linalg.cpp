@@ -19,15 +19,15 @@ void vectorPorEscalar(vector<double>& v, const double escalar){
     }
 }
 
-void sumarYAgregarAVector(vector<double>& v, const vector<unsigned char>& imgChar, const vector<double>& vProm){
-    if(imgChar.size() != vProm.size()){
-        fail("Tienen tamaños distintos las matrices.");
-    }
-
-    for(unsigned int i = 0; i < vProm.size(); i++){
-        v.push_back((double)imgChar[i] + vProm[i]);
-    }
-}
+//void sumarYAgregarAVector(vector<double>& v, const vector<unsigned char>& imgChar, const vector<double>& vProm){
+//    if(imgChar.size() != vProm.size()){
+//        fail("Tienen tamaños distintos las matrices.");
+//    }
+//
+//    for(unsigned int i = 0; i < vProm.size(); i++){
+//        v.push_back((double)imgChar[i] + vProm[i]);
+//    }
+//}
 
 double prodInternoXtX(const Matriz& a, const Matriz& b, int i, int j, unsigned int size){
     double suma = 0;
