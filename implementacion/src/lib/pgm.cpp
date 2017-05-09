@@ -66,13 +66,16 @@ imagen levantarImagen(string path){
     return imgData;
 }
 
-imagen vectorAImagen(vector<double> v){
-    vector<double> tmp  = rescale(v, 0, 255);
+imagen vectorAImagen(const vector<double>& v){
+    /* Toma un vector de doubles, lo re-escala al rango 0-255
+     * y lo castea a `imagen`.
+     */
+    vector<double> tmp  = reEscalar(v, 0, 255);
     imagen img (tmp.begin(), tmp.end());
     return img;
 }
 
-void escribirImagen(imagen img, int w, int h, string path){
+void escribirImagen(const imagen& img, int w, int h, string path){
     ofstream outfile (path, ios::binary);
     outfile << "P5 " << w << " " << h << " 255" << endl;
 

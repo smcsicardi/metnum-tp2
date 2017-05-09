@@ -127,6 +127,7 @@ double prodInterno(const vector<double>& v1, const vector<double>& v2){
 }
 
 Matriz deflacion(const Matriz& A, const EigenVV& e){
+    // TODO duplica uso de memoria esto pq usa B
     int size = e.autoVector.size();
     if(A.filas != size){
         fail("deflacion: La matriz tiene un tamaño de fila distinto del autovector");
@@ -156,7 +157,10 @@ double kahan(const vector<double>& v){
     return sum;
 }
 
-vector<double> rescale(const vector<double>& v, double low, double high){
+vector<double> reEscalar(const vector<double>& v, double low, double high){
+    /* Transforma un vector con números en el rango [min, max]
+     * a uno con nros en el rango [low, high].
+     */
     auto mm = minmax_element(v.begin(), v.end());
 
     vector<double> result (v.size());
