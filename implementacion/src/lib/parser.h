@@ -5,7 +5,7 @@
 #include <vector>
 #include <cstdlib>
 #include "tipos.h"
-#include "pgm_reader.h"
+#include "pgm.h"
 #include "linalg.h"
 
 using namespace std;

@@ -5,7 +5,7 @@
 #include <string>
 
 #include "lib/tipos.h"
-#include "lib/pgm_reader.h"
+#include "lib/pgm.h"
 #include "lib/utilities.h"
 #include "lib/linalg.h"
 #include "lib/parser.h"
@@ -24,12 +24,8 @@ int main(int argv, char* argc[]){
         M = deflacion(M, eigens[i]);
     }
 
-    cout << "P5 23 28 255" << endl;
-
-    for (auto i = 0;  i < 23*28; i++){
-        double e = eigens[0].autoVector[i];
-        cout << (unsigned char)((e+1)*255);
-    }
+    imagen tmp = vectorAImagen(eigens[0].autoVector);
+    escribirImagen(tmp, input.filas, input.columnas, "lol.pgm");
 
     //vector<double> xi = {1  2, 3};
     //for (auto i = 0; i < k; i++){

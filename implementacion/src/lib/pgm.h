@@ -4,5 +4,7 @@
 using namespace std;
 
 imagen levantarImagen(string path);
+void escribirImagen(imagen img, int w, int h, string path);
+imagen vectorAImagen(vector<double> v);
 
 #endif // PGM_READER_H

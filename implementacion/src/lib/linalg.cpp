@@ -144,7 +144,7 @@ Matriz deflacion(const Matriz& A, const EigenVV& e){
     return A - B;
 }
 
-double kahan(vector<double> v){
+double kahan(const vector<double>& v){
     double sum = 0.0;
     double c = 0.0;
     for (int i = 0; i < v.size(); i++){
@@ -154,4 +154,15 @@ double kahan(vector<double> v){
         sum = t;
     }
     return sum;
+}
+
+vector<double> rescale(const vector<double>& v, double low, double high){
+    auto mm = minmax_element(v.begin(), v.end());
+
+    vector<double> result (v.size());
+    for (auto i = 0; i < v.size(); i++){
+        result[i] = low + (high - low) * (v[i] - *mm.first)
+                                       / (*mm.second - *mm.first);
+    }
+    return result;
 }

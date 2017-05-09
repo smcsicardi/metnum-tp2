@@ -48,7 +48,10 @@ Matriz obtenerMatrizM(const Input& input){
     int count = 0;
     for(auto i = 0; i < input.cantPersonas; i++){
         for(auto j = 0; j < input.cantImgPorPers; j++){
-            imagenes[count] = levantarImagen(input.path + input.vBase[i].persona + to_string(input.vBase[i].nroImagen[j]) + ".pgm");
+            imagenes[count] = levantarImagen(input.path +
+                                             input.vBase[i].persona +
+                                             to_string(input.vBase[i].nroImagen[j]) +
+                                             ".pgm");
             sumarAProm(mu, imagenes[count++]);
         }
     }
