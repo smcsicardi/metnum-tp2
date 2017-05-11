@@ -31,6 +31,7 @@ Input levantarDatos(){
         ImgTest t;
         cin >> t.path;
         cin >> t.nroTest;
+        t.img = levantarImagen(t.path);
         input.vTests.push_back(t);
     }
     return input;
@@ -85,14 +86,24 @@ Matriz multiplicarXtX(const Matriz& X){
     return M;
 }
 
-AutoCaras obtenerAutoCaras(Matriz& M, Input& input){
-    AutoCaras ac(input.filas, input.columnas);
-    ac.eigens.resize(input.cantComponentes);
+autoCaras obtenerAutoCaras(Matriz& M, Input& input){
+    autoCaras ac(input.cantComponentes);
 
     for(auto i = 0; i < input.cantComponentes; i++){
-        ac.eigens[i] = metodoPotencia(M,100);
-        M = deflacion(M, ac.eigens[i]);
+        ac[i] = metodoPotencia(M,100);
+        M = deflacion(M, ac[i]);
     }
 
     return ac;
+}
+
+vector<double> transformacionCaracteristica(const autoCaras& ac, const imagen& img){
+    vector<double> tc(ac.size());
+    vector<double> imgDouble = imagenAVectorDouble(img);
+
+    for(unsigned int i = 0; i < ac.size(); i++){
+        tc[i] = prodInterno(ac[i].autoVector, imgDouble);
+    }
+
+    return tc;
 }

@@ -52,9 +52,17 @@ void imprimirMatriz(const Matriz &A){
     cerr << endl;
 }
 
-void imprimirAutoCaras(const AutoCaras& ac){
-    for(unsigned int i = 0; i < ac.eigens.size(); i++){
-        imagen tmp = vectorAImagen(ac.eigens[i].autoVector);
-        escribirImagen(tmp, ac.filas, ac.columnas, "autoCara"+to_string(i)+".pgm");
+void imprimirAutoCaras(const autoCaras& ac, int filas, int columnas){
+    for(unsigned int i = 0; i < ac.size(); i++){
+        imagen tmp = vectorAImagen(ac[i].autoVector);
+        escribirImagen(tmp, filas, columnas, "autoCara"+to_string(i)+".pgm");
     }
+}
+
+vector<double> imagenAVectorDouble(const imagen& img){
+    vector<double> v(img.size());
+    for(unsigned int i = 0; i < img.size(); i++){
+        v[i] = (double)img[i];
+    }
+    return v;
 }
