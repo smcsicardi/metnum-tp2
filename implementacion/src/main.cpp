@@ -14,18 +14,10 @@ using namespace std;
 
 int main(int argv, char* argc[]){
     Input input = levantarDatos();
-
     Matriz M = obtenerMatrizM(input);
+    AutoCaras ac = obtenerAutoCaras(M, input);
+    imprimirAutoCaras(ac);
 
-    int k = input.cantComponentes;
-    vector<EigenVV> eigens (k);
-    for (auto i = 0; i < k; i++){
-        eigens[i] = metodoPotencia(M, 100);
-        M = deflacion(M, eigens[i]);
-    }
-
-    imagen tmp = vectorAImagen(eigens[0].autoVector);
-    escribirImagen(tmp, input.filas, input.columnas, "lol.pgm");
 
     //vector<double> xi = {1  2, 3};
     //for (auto i = 0; i < k; i++){

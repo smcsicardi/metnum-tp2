@@ -7,6 +7,7 @@
 #include <cmath>
 #include "tipos.h"
 #include "utilities.h"
+#include <algorithm>
 
 using namespace std;
 

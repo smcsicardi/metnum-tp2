@@ -3,6 +3,7 @@
 #include <cstdlib>
 
 #include "utilities.h"
+#include "pgm.h"
 #include <iomanip> // Libreria para el padding
 
 using namespace std;
@@ -49,4 +50,11 @@ void imprimirMatriz(const Matriz &A){
         cerr << endl;
     }
     cerr << endl;
+}
+
+void imprimirAutoCaras(const AutoCaras& ac){
+    for(unsigned int i = 0; i < ac.eigens.size(); i++){
+        imagen tmp = vectorAImagen(ac.eigens[i].autoVector);
+        escribirImagen(tmp, ac.filas, ac.columnas, "autoCara"+to_string(i)+".pgm");
+    }
 }

@@ -6,6 +6,8 @@
 using namespace std;
 
 #define imagen vector<unsigned char>
+#define transfCarac vector<double>
+
 
 struct Matriz{
     int filas;
@@ -80,6 +82,16 @@ struct EigenVV{
     }
     double autoValor;
     vector<double> autoVector;
+};
+
+struct AutoCaras{
+    AutoCaras(int f, int c){
+        this->filas = f;
+        this->columnas = c;
+    }
+    vector<EigenVV> eigens;
+    int filas;
+    int columnas;
 };
 
 #endif

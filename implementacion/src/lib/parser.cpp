@@ -84,3 +84,15 @@ Matriz multiplicarXtX(const Matriz& X){
 
     return M;
 }
+
+AutoCaras obtenerAutoCaras(Matriz& M, Input& input){
+    AutoCaras ac(input.filas, input.columnas);
+    ac.eigens.resize(input.cantComponentes);
+
+    for(auto i = 0; i < input.cantComponentes; i++){
+        ac.eigens[i] = metodoPotencia(M,100);
+        M = deflacion(M, ac.eigens[i]);
+    }
+
+    return ac;
+}

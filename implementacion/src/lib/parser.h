@@ -13,5 +13,6 @@ using namespace std;
 Input levantarDatos();
 Matriz obtenerMatrizM(const Input& input);
 Matriz multiplicarXtX(const Matriz& vX);
+AutoCaras obtenerAutoCaras(Matriz& M, Input& input);
 
 #endif

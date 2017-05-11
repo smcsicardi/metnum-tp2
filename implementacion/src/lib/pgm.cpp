@@ -82,4 +82,5 @@ void escribirImagen(const imagen& img, int w, int h, string path){
     for (auto i = 0;  i < w*h; i++){
         outfile << img[i];
     }
+    outfile.close();
 }
