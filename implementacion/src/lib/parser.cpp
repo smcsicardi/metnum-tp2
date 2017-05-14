@@ -113,10 +113,10 @@ vector<EigenVV> obtenerAutoCaras(Matriz& M, Input& input){
 }
 
 vector<double> transformacionCaracteristica(const vector<EigenVV>& ac, const imagen& img){
-    vector<double> tc(ac.size());
-    vector<double> imgDouble = imagenAVectorDouble(img);
+    vector<double> tc (ac.size());
+    vector<double> imgDouble (img.begin(), img.end());
 
-    for(unsigned int i = 0; i < ac.size(); i++){
+    for(auto i = 0; i < ac.size(); i++){
         tc[i] = prodInterno(ac[i].autoVector, imgDouble);
     }
 

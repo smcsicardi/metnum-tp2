@@ -58,11 +58,3 @@ void imprimirAutoCaras(const vector<EigenVV>& ac, int filas, int columnas){
         escribirImagen(tmp, filas, columnas, "autoCara"+to_string(i)+".pgm");
     }
 }
-
-vector<double> imagenAVectorDouble(const imagen& img){
-    vector<double> v(img.size());
-    for(unsigned int i = 0; i < img.size(); i++){
-        v[i] = (double)img[i];
-    }
-    return v;
-}
