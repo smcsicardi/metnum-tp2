@@ -11,8 +11,9 @@
 using namespace std;
 
 Input levantarDatos();
-Matriz obtenerMatrizM(const Input& input);
-Matriz multiplicarXtX(const Matriz& vX);
+Matriz obtenerMatrizX(const Input& input);
+Matriz multiplicarXtX(const Matriz& X);
+Matriz multiplicarXXt(const Matriz& X);
 vector<EigenVV> obtenerAutoCaras(Matriz& M, Input& input);
 vector<double> transformacionCaracteristica(const vector<EigenVV>& ac, const imagen& img);
 

@@ -10,7 +10,7 @@ using namespace std;
 
 
 void imprimirDatos(const Input& input){
-    cout << input.path << " " << input.filas << " " << input.columnas << " " << input.cantPersonas << " " << input.cantImgPorPers << " " << input.cantComponentes << endl;
+    cout << input.path << " " << input.alto << " " << input.ancho << " " << input.cantPersonas << " " << input.cantImgPorPers << " " << input.cantComponentes << endl;
 
     for(auto b : input.vBase){
         cout << b.persona << " " << b.nroImagen.size() << " ";

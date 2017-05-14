@@ -57,7 +57,7 @@ EigenVV metodoPotencia(const Matriz& B, int cantIter){
 
         // Lo normalizo
         double norma = 1.00 / normaDos(b);
-        vectorPorEscalar(b, norma);    
+        vectorPorEscalar(b, norma);
         vRand = b;
     }
 

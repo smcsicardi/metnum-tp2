@@ -37,7 +37,7 @@ Input levantarDatos(){
     return input;
 }
 
-Matriz obtenerMatrizM(const Input& input){
+Matriz obtenerMatrizX(const Input& input){
     int size = input.alto * input.ancho;
     int cantImagenesTotales = input.cantImgPorPers*input.cantPersonas;
     vector<double> mu (size);
@@ -67,19 +67,33 @@ Matriz obtenerMatrizM(const Input& input){
         }
     }
 
-    // (xi - u)^t * (xi - u) / (n-1)
-    Matriz M = multiplicarXtX(X);
-
-    return M;
+    return X;
 }
 
 Matriz multiplicarXtX(const Matriz& X){
-    Matriz M(X.columnas, X.columnas);
+    Matriz M (X.columnas, X.columnas);
     double d = 1 / (double)(X.filas - 1);
 
     for(auto i = 0; i < X.columnas; i++){
         for(auto j = 0; j < X.columnas; j++){
             M.datos[i][j] = prodInternoXtX(X, X, i, j, X.filas) * d;
+        }
+    }
+
+    return M;
+}
+
+Matriz multiplicarXXt(const Matriz& X){
+    Matriz M (X.filas, X.filas);
+    double d = 1 / (double)(X.filas - 1);
+
+    for(auto i = 0; i < X.filas; i++){
+        for(auto j = 0; j < X.filas; j++){
+            double suma = 0;
+            for(auto k = 0; k < X.columnas; k++){
+                suma += X.datos[i][k] * X.datos[j][k];
+            }
+            M.datos[i][j] = suma * d;
         }
     }
 

@@ -14,11 +14,30 @@ using namespace std;
 
 int main(int argv, char* argc[]){
     Input input = levantarDatos();
-    Matriz M = obtenerMatrizM(input);
-    autoCaras ac = obtenerAutoCaras(M, input);
-    // imprimirAutoCaras(ac, input.filas, input.columnas);
+    Matriz X = obtenerMatrizX(input);
 
-    imprimirVector(transformacionCaracteristica(ac, input.vTests[0].img));
+    Matriz M = multiplicarXXt(X);
+    vector<EigenVV> ac = obtenerAutoCaras(M, input);
+
+
+    // y = Xt*autoVector
+    vector<double> y (X.columnas);
+    for (auto j = 0; j < X.columnas; j++){
+        double tmp = 0;
+        for (auto i = 0; i < X.filas; i++){
+            tmp += X.datos[i][j] * ac[0].autoVector[i];
+        }
+        y[j] = tmp;
+    }
+
+    imprimirVector(ac[0].autoVector);
+
+    escribirImagen(vectorAImagen(y),
+                   input.ancho,
+                   input.alto,
+                   "lol2.pgm");
+
+    //imprimirVector(transformacionCaracteristica(ac, input.vTests[0].img));
 
     return 0;
 }
