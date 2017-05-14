@@ -52,7 +52,7 @@ void imprimirMatriz(const Matriz &A){
     cerr << endl;
 }
 
-void imprimirAutoCaras(const autoCaras& ac, int filas, int columnas){
+void imprimirAutoCaras(const vector<EigenVV>& ac, int filas, int columnas){
     for(unsigned int i = 0; i < ac.size(); i++){
         imagen tmp = vectorAImagen(ac[i].autoVector);
         escribirImagen(tmp, filas, columnas, "autoCara"+to_string(i)+".pgm");

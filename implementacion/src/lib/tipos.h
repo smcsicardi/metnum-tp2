@@ -6,7 +6,6 @@
 using namespace std;
 
 #define imagen vector<unsigned char>
-#define autoCaras vector<EigenVV>
 
 struct Matriz{
     int filas;

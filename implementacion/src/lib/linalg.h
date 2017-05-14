@@ -21,7 +21,7 @@ EigenVV metodoPotencia(const Matriz& A, int cantIter);
 double normaInf(const vector<double>& v);
 double normaUno(const vector<double>& v);
 double normaDos(const vector<double>& v);
-Matriz deflacion(const Matriz& A, const EigenVV& e);
+void deflacion(Matriz& A, const EigenVV& e);
 double kahan(const vector<double>& v);
 vector<double> reEscalar(const vector<double>& v, double start, double end);
 

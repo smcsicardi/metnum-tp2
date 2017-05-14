@@ -13,7 +13,7 @@ using namespace std;
 Input levantarDatos();
 Matriz obtenerMatrizM(const Input& input);
 Matriz multiplicarXtX(const Matriz& vX);
-autoCaras obtenerAutoCaras(Matriz& M, Input& input);
-vector<double> transformacionCaracteristica(const autoCaras& ac, const imagen& img);
+vector<EigenVV> obtenerAutoCaras(Matriz& M, Input& input);
+vector<double> transformacionCaracteristica(const vector<EigenVV>& ac, const imagen& img);
 
 #endif

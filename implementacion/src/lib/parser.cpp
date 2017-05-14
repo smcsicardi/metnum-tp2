@@ -86,18 +86,19 @@ Matriz multiplicarXtX(const Matriz& X){
     return M;
 }
 
-autoCaras obtenerAutoCaras(Matriz& M, Input& input){
-    autoCaras ac(input.cantComponentes);
+vector<EigenVV> obtenerAutoCaras(Matriz& M, Input& input){
+    // modifica M
+    vector<EigenVV> ac(input.cantComponentes);
 
     for(auto i = 0; i < input.cantComponentes; i++){
-        ac[i] = metodoPotencia(M,100);
-        M = deflacion(M, ac[i]);
+        ac[i] = metodoPotencia(M, 100);
+        deflacion(M, ac[i]);
     }
 
     return ac;
 }
 
-vector<double> transformacionCaracteristica(const autoCaras& ac, const imagen& img){
+vector<double> transformacionCaracteristica(const vector<EigenVV>& ac, const imagen& img){
     vector<double> tc(ac.size());
     vector<double> imgDouble = imagenAVectorDouble(img);
 

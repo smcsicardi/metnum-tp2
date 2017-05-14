@@ -126,23 +126,18 @@ double prodInterno(const vector<double>& v1, const vector<double>& v2){
     return suma;
 }
 
-Matriz deflacion(const Matriz& A, const EigenVV& e){
-    // TODO duplica uso de memoria esto pq usa B
+void deflacion(Matriz& A, const EigenVV& e){
     int size = e.autoVector.size();
     if(A.filas != size){
         fail("deflacion: La matriz tiene un tamaño de fila distinto del autovector");
     }
 
-    // genero lambda * v * v^t
-    Matriz B(size, size);
+    // A - lambda * v * v^t
     for(int i = 0; i < size; i++){
         for(int j = 0; j < size; j++){
-            B.datos[i][j] = e.autoValor * e.autoVector[i] * e.autoVector[j];
+            A.datos[i][j] -= e.autoValor * e.autoVector[i] * e.autoVector[j];
         }
     }
-
-    // Devuelvo la matriz A - lambda*v*v^t
-    return A - B;
 }
 
 double kahan(const vector<double>& v){
