@@ -7,8 +7,8 @@ Input levantarDatos(){
     // Primera linea
     Input input;
     cin >> input.path;
-    cin >> input.filas;
-    cin >> input.columnas;
+    cin >> input.alto;
+    cin >> input.ancho;
     cin >> input.cantPersonas;
     cin >> input.cantImgPorPers;
     cin >> input.cantComponentes;
@@ -38,7 +38,7 @@ Input levantarDatos(){
 }
 
 Matriz obtenerMatrizM(const Input& input){
-    int size = input.filas * input.columnas;
+    int size = input.alto * input.ancho;
     int cantImagenesTotales = input.cantImgPorPers*input.cantPersonas;
     vector<double> mu (size);
     vector<imagen> imagenes (cantImagenesTotales);

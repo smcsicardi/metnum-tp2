@@ -66,8 +66,8 @@ struct ImgTest{
 
 struct Input{
     string path;
-    int filas;
-    int columnas;
+    int alto;
+    int ancho;
     int cantPersonas;
     int cantImgPorPers;
     int cantComponentes;
