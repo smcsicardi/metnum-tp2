@@ -100,14 +100,14 @@ double normaDos(const vector<double>& v){
 }
 
 vector<double> matrizXVector(const Matriz& A, const vector<double>& x){
-    vector<double> b;
+    vector<double> b (A.filas);
 
     if((A.filas == 0 && A.columnas == 0) || (A.filas != (int)(x.size()))){
         fail("MatrizXVector: matriz vacia o distintos tamaños entre fila de matriz y vector.");
     }
 
-    for(auto m : A.datos){
-        b.push_back(prodInterno(m, x));
+    for(auto i = 0; i < A.filas; i++){
+        b[i] = prodInterno(A.datos[i], x);
     }
 
     return b;
