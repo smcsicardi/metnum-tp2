@@ -64,23 +64,18 @@ int main(int argc, char* argv[]){
             n++;
         }
     }
-    for (auto i = 0; i < X2.size(); i++){
-        cout << X2[i].persona << endl;
-        imprimirVector(X2[i].coordenadas);
-        cout << "---" << endl;
-    }
 
     Punto p;
-    p.persona = input.vTests[0].persona;
+    p.persona = input.vTests[1].persona;
     vector<double> y (input.alto * input.ancho);
     // y = (img - mu) / sqrt(n - 1)
     for(auto i = 0; i < y.size(); i++){
-        y[i] = ((double)input.vTests[0].img[i] - mu[i])
+        y[i] = ((double)input.vTests[1].img[i] - mu[i])
                / sqrt(cantImagenesTotales - 1);
     }
-    p.coordenadas = transformacionCaracteristica(
-            autoCaras, y);
-    cout << "persona: " << kNN(X2, p, 5) << endl;
+    p.coordenadas = transformacionCaracteristica(autoCaras, y);
+    int k = (input.cantPersonas % 2 == 0) ? 5 : 6;
+    cout << "persona: " << kNN(X2, p, k, input.cantPersonas) << endl;
 
     //escribirImagen(vectorAImagen(autoCaras[1].autoVector),
     //               input.ancho,
