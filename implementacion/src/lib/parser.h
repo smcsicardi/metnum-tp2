@@ -14,6 +14,9 @@ Input levantarDatos();
 Matriz obtenerMatrizX(const Input& input, vector<double>& mu);
 Matriz multiplicarXtX(const Matriz& X);
 Matriz multiplicarXXt(const Matriz& X);
-vector<double> transformacionCaracteristica(const vector<EigenVV>& ac, const imagen& img);
+vector<double> transformacionCaracteristica(const vector<EigenVV>& ac,
+                                            const imagen& x);
+vector<double> transformacionCaracteristica(const vector<EigenVV>& ac,
+                                            const vector<double>& x);
 
 #endif

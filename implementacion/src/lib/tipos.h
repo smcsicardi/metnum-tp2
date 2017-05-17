@@ -63,7 +63,7 @@ struct ImgBase{
 struct ImgTest{
     string path;
     imagen img;
-    int nroTest;
+    int persona;
 };
 
 struct Input{
@@ -92,5 +92,10 @@ struct EigenVV{
 //     int filas;
 //     int columnas;
 // };
+
+struct Punto{
+    int persona;
+    vector<double> coordenadas;
+};
 
 #endif

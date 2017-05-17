@@ -24,7 +24,7 @@ void imprimirDatos(const Input& input){
     cout << input.nTest << endl;
 
     for(auto t : input.vTests){
-        cout << t.path << " " << t.nroTest << endl;
+        cout << t.path << " " << t.persona << endl;
     }
 }
 

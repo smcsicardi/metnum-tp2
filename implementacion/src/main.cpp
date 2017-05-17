@@ -9,6 +9,7 @@
 #include "lib/utilities.h"
 #include "lib/linalg.h"
 #include "lib/parser.h"
+#include "lib/knn.h"
 
 using namespace std;
 
@@ -50,14 +51,33 @@ int main(int argc, char* argv[]){
         }
     }
 
+    // X2 = [ Punto( tc(x_i) , nro persona ) ]
+    vector<Punto> X2 (input.cantImgPorPers * input.cantPersonas);
+
+    int n = 0;
+    for (auto p = 0; p < input.cantPersonas; p++){
+        for (auto i = 0; i < input.cantImgPorPers; i++){
+            X2[n].persona = p + 1;
+            X2[n].coordenadas = transformacionCaracteristica(
+                    autoCaras, X.datos[n]);
+            n++;
+        }
+    }
+    for (auto i = 0; i < X2.size(); i++){
+        cout << X2[i].persona << endl;
+        imprimirVector(X2[i].coordenadas);
+        cout << "---" << endl;
+    }
+    Punto y;
+    y.persona = input.vTests[0].persona;
+    y.coordenadas = transformacionCaracteristica(
+            autoCaras, input.vTests[0].img);
+    cout << "persona: " << kNN(X2, y, 5) << endl;
+
     //escribirImagen(vectorAImagen(autoCaras[1].autoVector),
     //               input.ancho,
     //               input.alto,
     //               "autocara2.pgm");
-
-    imprimirVector(
-        transformacionCaracteristica(
-            autoCaras, input.vTests[0].img));
 
     return 0;
 }

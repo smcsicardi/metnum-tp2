@@ -28,12 +28,12 @@ Input levantarDatos(){
         input.vBase[i] = b;
     }
 
-    // Imagenes para testear con su numero de test
+    // Imagenes para testear con su numero de persona
     cin >> input.nTest;
     for(int i = 0; i < input.nTest; i++){
         ImgTest t;
         cin >> t.path;
-        cin >> t.nroTest;
+        cin >> t.persona;
         t.img = levantarImagen(t.path);
         input.vTests.push_back(t);
     }
@@ -65,10 +65,11 @@ Matriz obtenerMatrizX(const Input& input, vector<double>& mu){
     }
     vectorPorEscalar(mu, 1 / (double)cantImagenesTotales);
 
-    // (xi - u)
+    // (xi - u) / sqrt(n - 1)
     for(auto i = 0; i < cantImagenesTotales; i++){
         for (auto j = 0; j < size; j++) {
-            X.datos[i][j] = (double)imagenes[i][j] - mu[j];
+            X.datos[i][j] = ((double)imagenes[i][j] - mu[j])
+                            / sqrt(cantImagenesTotales - 1);
         }
     }
 
@@ -77,11 +78,10 @@ Matriz obtenerMatrizX(const Input& input, vector<double>& mu){
 
 Matriz multiplicarXtX(const Matriz& X){
     Matriz M (X.columnas, X.columnas);
-    double d = 1 / (double)(X.filas - 1);
 
     for(auto i = 0; i < X.columnas; i++){
         for(auto j = 0; j < X.columnas; j++){
-            M.datos[i][j] = prodInternoXtX(X, X, i, j, X.filas) * d;
+            M.datos[i][j] = prodInternoXtX(X, X, i, j, X.filas);
         }
     }
 
@@ -90,7 +90,6 @@ Matriz multiplicarXtX(const Matriz& X){
 
 Matriz multiplicarXXt(const Matriz& X){
     Matriz M (X.filas, X.filas);
-    double d = 1 / (double)(X.filas - 1);
 
     for(auto i = 0; i < X.filas; i++){
         for(auto j = 0; j < X.filas; j++){
@@ -98,7 +97,7 @@ Matriz multiplicarXXt(const Matriz& X){
             for(auto k = 0; k < X.columnas; k++){
                 suma += X.datos[i][k] * X.datos[j][k];
             }
-            M.datos[i][j] = suma * d;
+            M.datos[i][j] = suma;
         }
     }
 
@@ -106,12 +105,17 @@ Matriz multiplicarXXt(const Matriz& X){
 }
 
 vector<double> transformacionCaracteristica(const vector<EigenVV>& ac,
-                                            const imagen& img){
+                                            const imagen& x){
+    vector<double> imgDouble (x.begin(), x.end());
+    return transformacionCaracteristica(ac, imgDouble);
+}
+
+vector<double> transformacionCaracteristica(const vector<EigenVV>& ac,
+                                            const vector<double>& x){
     vector<double> tc (ac.size());
-    vector<double> imgDouble (img.begin(), img.end());
 
     for(auto i = 0; i < ac.size(); i++){
-        tc[i] = prodInterno(ac[i].autoVector, imgDouble);
+        tc[i] = prodInterno(ac[i].autoVector, x);
     }
 
     return tc;
