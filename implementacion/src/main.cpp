@@ -14,7 +14,8 @@ using namespace std;
 
 int main(int argc, char* argv[]){
     Input input = levantarDatos();
-    Matriz X = obtenerMatrizX(input);
+    vector<double> mu (input.alto * input.ancho, 0);
+    Matriz X = obtenerMatrizX(input, mu);
 
     // indefinido si cantComponentes > X.filas
     vector<EigenVV> autoCaras (input.cantComponentes);

@@ -40,27 +40,29 @@ Input levantarDatos(){
     return input;
 }
 
-Matriz obtenerMatrizX(const Input& input){
+Matriz obtenerMatrizX(const Input& input, vector<double>& mu){
+    // modifica mu
     int size = input.alto * input.ancho;
     int cantImagenesTotales = input.cantImgPorPers * input.cantPersonas;
-    vector<double> mu (size);
     vector<imagen> imagenes (cantImagenesTotales);
-    Matriz X(cantImagenesTotales, size);
+    Matriz X (cantImagenesTotales, size);
 
     // levanto todas las imagenes y a medida que lo voy haciendo
     // calculo la suma para la imagen promedio.
-    int count = 0;
+
+    int n = 0;
     for(auto i = 0; i < input.cantPersonas; i++){
         for(auto j = 0; j < input.cantImgPorPers; j++){
-            imagenes[count] = levantarImagen(input.path +
-                                             input.vBase[i].persona +
-                                             to_string(input.vBase[i].nrosImagen[j]) +
-                                             ".pgm");
-            sumarAProm(mu, imagenes[count++]);
+            imagenes[n] = levantarImagen(input.path +
+                                         input.vBase[i].persona +
+                                         to_string(input.vBase[i].nrosImagen[j]) +
+                                         ".pgm");
+            for (auto k = 0; k < size; k++){
+                mu[k] += (double)imagenes[n][k];
+            }
+            n++;
         }
     }
-
-    // promedio: u = (x1 +...+ xn)/n
     vectorPorEscalar(mu, 1 / (double)cantImagenesTotales);
 
     // (xi - u)

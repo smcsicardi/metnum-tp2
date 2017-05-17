@@ -3,16 +3,6 @@
 
 using namespace std;
 
-void sumarAProm(vector<double>& a, const imagen& b){
-    if(a.size() != b.size()){
-        fail("error sumarAProm: No se pueden sumar/restar matrices de tamaños distintos.");
-    }
-
-    for(unsigned int i = 0; i < a.size(); i++){
-        a[i] += (double)b[i];
-    }
-}
-
 void vectorPorEscalar(vector<double>& v, const double escalar){
     for(unsigned int i = 0; i < v.size(); i++){
         v[i] *= escalar;
