@@ -105,12 +105,6 @@ Matriz multiplicarXXt(const Matriz& X){
 }
 
 vector<double> transformacionCaracteristica(const vector<EigenVV>& ac,
-                                            const imagen& x){
-    vector<double> imgDouble (x.begin(), x.end());
-    return transformacionCaracteristica(ac, imgDouble);
-}
-
-vector<double> transformacionCaracteristica(const vector<EigenVV>& ac,
                                             const vector<double>& x){
     vector<double> tc (ac.size());
 

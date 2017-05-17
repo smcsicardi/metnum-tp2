@@ -15,6 +15,7 @@ using namespace std;
 
 int main(int argc, char* argv[]){
     Input input = levantarDatos();
+    int cantImagenesTotales = input.cantImgPorPers * input.cantPersonas;
     vector<double> mu (input.alto * input.ancho, 0);
     Matriz X = obtenerMatrizX(input, mu);
 
@@ -52,7 +53,7 @@ int main(int argc, char* argv[]){
     }
 
     // X2 = [ Punto( tc(x_i) , nro persona ) ]
-    vector<Punto> X2 (input.cantImgPorPers * input.cantPersonas);
+    vector<Punto> X2 (cantImagenesTotales);
 
     int n = 0;
     for (auto p = 0; p < input.cantPersonas; p++){
@@ -68,11 +69,18 @@ int main(int argc, char* argv[]){
         imprimirVector(X2[i].coordenadas);
         cout << "---" << endl;
     }
-    Punto y;
-    y.persona = input.vTests[0].persona;
-    y.coordenadas = transformacionCaracteristica(
-            autoCaras, input.vTests[0].img);
-    cout << "persona: " << kNN(X2, y, 5) << endl;
+
+    Punto p;
+    p.persona = input.vTests[0].persona;
+    vector<double> y (input.alto * input.ancho);
+    // y = (img - mu) / sqrt(n - 1)
+    for(auto i = 0; i < y.size(); i++){
+        y[i] = ((double)input.vTests[0].img[i] - mu[i])
+               / sqrt(cantImagenesTotales - 1);
+    }
+    p.coordenadas = transformacionCaracteristica(
+            autoCaras, y);
+    cout << "persona: " << kNN(X2, p, 5) << endl;
 
     //escribirImagen(vectorAImagen(autoCaras[1].autoVector),
     //               input.ancho,
