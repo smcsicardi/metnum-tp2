@@ -13,16 +13,19 @@ Input levantarDatos(){
     cin >> input.cantImgPorPers;
     cin >> input.cantComponentes;
 
+    input.vBase.resize(input.cantPersonas);
+
     // Levanto imagenes de la base
     for(int i = 0; i < input.cantPersonas; i++){
         ImgBase b;
+        b.nrosImagen.resize(input.cantImgPorPers);
         cin >> b.persona;
         for(int j = 0; j < input.cantImgPorPers; j++){
             int auxImagen;
             cin >> auxImagen;
-            b.nroImagen.push_back(auxImagen);
+            b.nrosImagen[j] = auxImagen;
         }
-        input.vBase.push_back(b);
+        input.vBase[i] = b;
     }
 
     // Imagenes para testear con su numero de test
@@ -39,10 +42,10 @@ Input levantarDatos(){
 
 Matriz obtenerMatrizX(const Input& input){
     int size = input.alto * input.ancho;
-    int cantImagenesTotales = input.cantImgPorPers*input.cantPersonas;
+    int cantImagenesTotales = input.cantImgPorPers * input.cantPersonas;
     vector<double> mu (size);
     vector<imagen> imagenes (cantImagenesTotales);
-    Matriz X(input.cantImgPorPers * input.cantPersonas, size);
+    Matriz X(cantImagenesTotales, size);
 
     // levanto todas las imagenes y a medida que lo voy haciendo
     // calculo la suma para la imagen promedio.
@@ -51,7 +54,7 @@ Matriz obtenerMatrizX(const Input& input){
         for(auto j = 0; j < input.cantImgPorPers; j++){
             imagenes[count] = levantarImagen(input.path +
                                              input.vBase[i].persona +
-                                             to_string(input.vBase[i].nroImagen[j]) +
+                                             to_string(input.vBase[i].nrosImagen[j]) +
                                              ".pgm");
             sumarAProm(mu, imagenes[count++]);
         }
@@ -100,19 +103,8 @@ Matriz multiplicarXXt(const Matriz& X){
     return M;
 }
 
-vector<EigenVV> obtenerAutoCaras(Matriz& M, Input& input){
-    // modifica M
-    vector<EigenVV> ac(input.cantComponentes);
-
-    for(auto i = 0; i < input.cantComponentes; i++){
-        ac[i] = metodoPotencia(M, 100);
-        deflacion(M, ac[i]);
-    }
-
-    return ac;
-}
-
-vector<double> transformacionCaracteristica(const vector<EigenVV>& ac, const imagen& img){
+vector<double> transformacionCaracteristica(const vector<EigenVV>& ac,
+                                            const imagen& img){
     vector<double> tc (ac.size());
     vector<double> imgDouble (img.begin(), img.end());
 

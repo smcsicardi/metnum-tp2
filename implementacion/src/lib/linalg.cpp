@@ -40,8 +40,6 @@ double prodInternoXtX(const Matriz& a, const Matriz& b, int i, int j, unsigned i
 }
 
 EigenVV metodoPotencia(const Matriz& B, int cantIter){
-    EigenVV e;
-
     // Genero un vector random para calcular el metodo.
     vector<double> vRand(B.filas, 1);
     // vector<double> vRand;
@@ -63,9 +61,10 @@ EigenVV metodoPotencia(const Matriz& B, int cantIter){
 
     // lambda = v^t * (B * v) / (v^t * v)
     vector<double> Bv = matrizXVector(B, vRand);
+
+    EigenVV e;
     e.autoValor = prodInterno(Bv, vRand) / prodInterno(vRand, vRand);
     e.autoVector = vRand;
-
     return e;
 }
 
@@ -114,12 +113,12 @@ vector<double> matrizXVector(const Matriz& A, const vector<double>& x){
 }
 
 double prodInterno(const vector<double>& v1, const vector<double>& v2){
-    double suma = 0;
     if(v1.size() != v2.size()){
         fail("prodInterno: vectores de distintos tamaños");
     }
 
-    for(unsigned int i = 0; i < v1.size(); i++){
+    double suma = 0;
+    for(auto i = 0; i < v1.size(); i++){
         suma += v1[i] * v2[i];
     }
 
@@ -164,4 +163,18 @@ vector<double> reEscalar(const vector<double>& v, double low, double high){
                                        / (*mm.second - *mm.first);
     }
     return result;
+}
+
+
+vector<EigenVV> obtenerAutoVV(Matriz& M, int cantComponentes){
+    // modifica M
+    vector<EigenVV> ac(cantComponentes);
+
+    for(auto i = 0; i < cantComponentes; i++){
+        // TODO ver criterio de parada
+        ac[i] = metodoPotencia(M, 100);
+        deflacion(M, ac[i]);
+    }
+
+    return ac;
 }

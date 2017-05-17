@@ -12,6 +12,9 @@ struct Matriz{
     int columnas;
     vector<vector<double>> datos;
 
+    Matriz(){
+    }
+
     Matriz(int filas, int columnas){
         this->filas = filas;
         this->columnas = columnas;
@@ -54,7 +57,7 @@ struct Matriz{
 
 struct ImgBase{
     string persona;
-    vector<int> nroImagen;
+    vector<int> nrosImagen;
 };
 
 struct ImgTest{
@@ -76,9 +79,6 @@ struct Input{
 };
 
 struct EigenVV{
-    EigenVV(){
-        this->autoValor = -1.00;
-    }
     double autoValor;
     vector<double> autoVector;
 };

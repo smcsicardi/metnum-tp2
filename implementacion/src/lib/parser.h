@@ -14,7 +14,6 @@ Input levantarDatos();
 Matriz obtenerMatrizX(const Input& input);
 Matriz multiplicarXtX(const Matriz& X);
 Matriz multiplicarXXt(const Matriz& X);
-vector<EigenVV> obtenerAutoCaras(Matriz& M, Input& input);
 vector<double> transformacionCaracteristica(const vector<EigenVV>& ac, const imagen& img);
 
 #endif

@@ -12,32 +12,51 @@
 
 using namespace std;
 
-int main(int argv, char* argc[]){
+int main(int argc, char* argv[]){
     Input input = levantarDatos();
     Matriz X = obtenerMatrizX(input);
 
-    Matriz M = multiplicarXXt(X);
-    vector<EigenVV> ac = obtenerAutoCaras(M, input);
+    // indefinido si cantComponentes > X.filas
+    vector<EigenVV> autoCaras (input.cantComponentes);
+    Matriz M;
 
+    if (argc <= 1) {
+        // sin argumentos hace Xt*X
+        M = multiplicarXtX(X);
+        autoCaras = obtenerAutoVV(M, input.cantComponentes);
+    } else {
+        if (string(argv[1]) == "--fast"){
+            // con --fast hace X*Xt y después genera las autoCaras
+            M = multiplicarXXt(X);
+            vector<EigenVV> autoVV = obtenerAutoVV(M, input.cantComponentes);
 
-    // y = Xt*autoVector
-    vector<double> y (X.columnas);
-    for (auto j = 0; j < X.columnas; j++){
-        double tmp = 0;
-        for (auto i = 0; i < X.filas; i++){
-            tmp += X.datos[i][j] * ac[0].autoVector[i];
+            // autoCaras_k = Xt*autoVV_k
+            for (auto k = 0; k < input.cantComponentes; k++){
+                autoCaras[k].autoValor = autoVV[k].autoValor;
+                autoCaras[k].autoVector.resize(X.columnas);
+
+                for (auto j = 0; j < X.columnas; j++){
+                    double tmp = 0;
+                    for (auto i = 0; i < X.filas; i++){
+                        tmp += X.datos[i][j] * autoVV[k].autoVector[i];
+                    }
+                    autoCaras[k].autoVector[j] = tmp;
+                }
+            }
+        } else {
+            cout << "Uso: tp2 [--fast]\n\nOpción desconocida.";
+            return 1;
         }
-        y[j] = tmp;
     }
 
-    imprimirVector(ac[0].autoVector);
+    //escribirImagen(vectorAImagen(autoCaras[1].autoVector),
+    //               input.ancho,
+    //               input.alto,
+    //               "autocara2.pgm");
 
-    escribirImagen(vectorAImagen(y),
-                   input.ancho,
-                   input.alto,
-                   "lol2.pgm");
-
-    //imprimirVector(transformacionCaracteristica(ac, input.vTests[0].img));
+    imprimirVector(
+        transformacionCaracteristica(
+            autoCaras, input.vTests[0].img));
 
     return 0;
 }

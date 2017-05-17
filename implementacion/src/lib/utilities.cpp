@@ -13,9 +13,9 @@ void imprimirDatos(const Input& input){
     cout << input.path << " " << input.alto << " " << input.ancho << " " << input.cantPersonas << " " << input.cantImgPorPers << " " << input.cantComponentes << endl;
 
     for(auto b : input.vBase){
-        cout << b.persona << " " << b.nroImagen.size() << " ";
+        cout << b.persona << " " << b.nrosImagen.size() << " ";
         for(int j = 0; j < input.cantImgPorPers; j++){
-            cout << b.nroImagen[j] << " ";
+            cout << b.nrosImagen[j] << " ";
         }
         cout << endl;
     }
@@ -36,7 +36,7 @@ void fail(string msg){
 void imprimirVector(const vector<double>& v){
     cerr << fixed << setprecision(3);
     for (auto i : v){
-        cerr << setfill(' ') << setw(11) << i;
+        cerr << i << ", ";
     }
     cout << endl;
 }
