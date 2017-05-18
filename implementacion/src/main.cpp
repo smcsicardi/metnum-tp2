@@ -45,13 +45,16 @@ int main(int argc, char* argv[]){
                     }
                     autoCaras[k].autoVector[j] = tmp;
                 }
-                vectorPorEscalar(autoCaras[k].autoVector,
-                                 1 / normaDos(autoCaras[k].autoVector));
             }
         } else {
             cout << "Uso: tp2 [--fast]\n\nOpción desconocida.";
             return 1;
         }
+    }
+
+    // normalizo autoCaras
+    for (auto& ac : autoCaras){
+        vectorPorEscalar(ac.autoVector, 1 / normaDos(ac.autoVector));
     }
 
     // X2 = [ Punto( tc(x_i) , nro persona ) ]

@@ -16,8 +16,7 @@ imagen levantarImagen(string path){
     ifstream infile (path, ios::binary);
 
     if (!infile.is_open()) {
-        cout << "path = " << path << endl;
-        fail("Unable to open file.");
+        fail("Unable to open file: \"" + path + "\".");
     }
 
     // los 4 valores que tiene el header: version w h maxVal
