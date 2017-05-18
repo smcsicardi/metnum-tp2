@@ -19,7 +19,7 @@ int main(int argc, char* argv[]){
     vector<double> mu (input.alto * input.ancho, 0);
     Matriz X = obtenerMatrizX(input, mu);
 
-    // indefinido si cantComponentes > X.filas
+    // XXX indefinido si cantComponentes > cantImagenesTotales
     vector<EigenVV> autoCaras (input.cantComponentes);
     Matriz M;
 
@@ -29,7 +29,7 @@ int main(int argc, char* argv[]){
         autoCaras = obtenerAutoVV(M, input.cantComponentes);
     } else {
         if (string(argv[1]) == "--fast"){
-            // con --fast hace X*Xt y después genera las autoCaras
+            // con --fast hace X*Xt y después Xt*autoVV
             M = multiplicarXXt(X);
             vector<EigenVV> autoVV = obtenerAutoVV(M, input.cantComponentes);
 
@@ -45,6 +45,8 @@ int main(int argc, char* argv[]){
                     }
                     autoCaras[k].autoVector[j] = tmp;
                 }
+                vectorPorEscalar(autoCaras[k].autoVector,
+                                 1 / normaDos(autoCaras[k].autoVector));
             }
         } else {
             cout << "Uso: tp2 [--fast]\n\nOpción desconocida.";
@@ -64,6 +66,8 @@ int main(int argc, char* argv[]){
             n++;
         }
     }
+
+    guardarCSV(X2, input.cantComponentes, "csv/X2.csv");
 
     Punto p;
     p.persona = input.vTests[1].persona;

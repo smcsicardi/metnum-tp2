@@ -3,7 +3,7 @@
 
 using namespace std;
 
-void vectorPorEscalar(vector<double>& v, const double escalar){
+void vectorPorEscalar(vector<double>& v, double escalar){
     for(unsigned int i = 0; i < v.size(); i++){
         v[i] *= escalar;
     }

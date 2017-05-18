@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <cstdlib>
+#include <fstream>
 
 #include "utilities.h"
 #include "pgm.h"
@@ -56,5 +57,26 @@ void imprimirAutoCaras(const vector<EigenVV>& ac, int filas, int columnas){
     for(unsigned int i = 0; i < ac.size(); i++){
         imagen tmp = vectorAImagen(ac[i].autoVector);
         escribirImagen(tmp, filas, columnas, "autoCara"+to_string(i)+".pgm");
+    }
+}
+
+void guardarCSV(const vector<Punto>& X, int dimension, string path){
+    ofstream outfile (path);
+
+    // escribo el header
+    outfile << "persona,";
+    for (auto j = 1; j <= dimension; j++){
+        outfile << "x" << j << (j < dimension ? "," : "");
+    }
+    outfile << endl;
+
+    // y cada fila
+    for (auto i = 0; i < X.size(); i++){
+        outfile << X[i].persona << ",";
+        for (auto j = 1; j <= dimension; j++){
+            outfile << X[i].coordenadas[j]
+                    << (j < dimension ? "," : "");
+        }
+        outfile << endl;
     }
 }
