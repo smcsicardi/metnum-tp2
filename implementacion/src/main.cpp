@@ -1,6 +1,5 @@
 #include <iostream>
 #include <cstdlib>
-#include <stdio.h>
 #include <vector>
 #include <string>
 
@@ -15,11 +14,11 @@ using namespace std;
 
 int main(int argc, char* argv[]){
     Input input = levantarDatos();
-    int cantImagenesTotales = input.cantImgPorPers * input.cantPersonas;
+    //int cantImagenesTotales = input.cantImgPorPers * input.cantPersonas;
     vector<double> mu (input.alto * input.ancho, 0);
     Matriz X = obtenerMatrizX(input, mu);
 
-    // XXX indefinido si cantComponentes > cantImagenesTotales
+    // XXX indefinido si --fast y cantComponentes > cantImagenesTotales
     vector<EigenVV> autoCaras (input.cantComponentes);
     Matriz M;
 
@@ -46,7 +45,7 @@ int main(int argc, char* argv[]){
             }
         }
     } else {
-        cout << "Uso: tp2 [--fast]\n\nOpción desconocida.";
+        cerr << "Uso: tp2 [--fast]";
         return 1;
     }
 
@@ -59,44 +58,6 @@ int main(int argc, char* argv[]){
                        input.ancho,
                        input.alto,
                        "eigenfaces/autocara" + to_string(i) + ".pgm");
-    }
-
-
-    // X2 = [ Punto( tc(x_i) , nro persona ) ]
-    vector<Punto> X2 (cantImagenesTotales);
-
-    int n = 0;
-    for (auto p = 0; p < input.cantPersonas; p++){
-        for (auto i = 0; i < input.cantImgPorPers; i++){
-            X2[n].persona = p + 1;
-            X2[n].coordenadas = transformacionCaracteristica(
-                    autoCaras, X.datos[n]);
-            n++;
-        }
-    }
-
-
-    // guardo X2 como persona,x1,x2,...,xn
-    guardarCSV(X2, input.cantComponentes, "csv/X2.csv");
-
-    // para cada vTest, clasifico con kNN
-    for (auto t : input.vTests){
-        vector<double> y (input.alto * input.ancho);
-
-        // y = (img - mu) / sqrt(n - 1)
-        for(auto i = 0; i < y.size(); i++){
-            y[i] = ((double)t.img[i] - mu[i])
-                   / sqrt(cantImagenesTotales - 1);
-        }
-
-        Punto p (t.persona,
-                 transformacionCaracteristica(autoCaras, y));
-
-        // k es par si cantPersonas impar, y viceversa
-        int k = (input.cantPersonas % 2 == 0) ? 5 : 6;
-        int p_class = kNN(X2, p, k, input.cantPersonas);
-        cerr << "persona " << t.persona << " -> "
-             << p_class << endl;
     }
 
     // print componentes principales
