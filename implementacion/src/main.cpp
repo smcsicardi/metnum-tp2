@@ -45,7 +45,7 @@ int main(int argc, char* argv[]){
             }
         }
     } else {
-        cerr << "Uso: tp2 [--fast]";
+        cerr << "Uso: tp2 [--fast]\n";
         return 1;
     }
 

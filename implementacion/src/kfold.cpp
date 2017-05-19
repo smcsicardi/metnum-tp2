@@ -19,7 +19,7 @@ int main(int argc, char* argv[]){
      */
 
     if (argc != 2){
-        cerr << "Uso: kfold k-nearest-neightbours";
+        cerr << "Uso: kfold k-nearest-neightbours\n";
         return 1;
     }
 

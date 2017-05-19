@@ -5,7 +5,12 @@ s2/ 1 2 3 4 5
 s3/ 1 2 3 4 5
 s4/ 1 2 3 4 5
 s5/ 1 2 3 4 5
+s6/ 1 2 3 4 5
+s7/ 1 2 3 4 5
+s8/ 1 2 3 4 5
+s9/ 1 2 3 4 5
+s10/ 1 2 3 4 5
 
 2
-../data/ImagenesCarasRed/s1/9.pgm 1
+../data/ImagenesCarasRed/s21/9.pgm 21
 ../data/ImagenesCarasRed/s2/5.pgm 2
