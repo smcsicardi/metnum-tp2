@@ -83,17 +83,13 @@ struct EigenVV{
     vector<double> autoVector;
 };
 
-// struct AutoCaras{
-//     AutoCaras(int f, int c){
-//         this->filas = f;
-//         this->columnas = c;
-//     }
-//     vector<EigenVV> eigens;
-//     int filas;
-//     int columnas;
-// };
-
 struct Punto{
+    Punto(){
+    }
+    Punto(int persona, vector<double> coordenadas){
+        this->persona = persona;
+        this->coordenadas = coordenadas;
+    }
     int persona;
     vector<double> coordenadas;
 };

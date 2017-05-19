@@ -80,17 +80,29 @@ int main(int argc, char* argv[]){
     guardarCSV(X2, input.cantComponentes, "csv/X2.csv");
 
     // para cada vTest, clasifico con kNN
-    Punto p;
-    p.persona = input.vTests[1].persona;
-    vector<double> y (input.alto * input.ancho);
-    // y = (img - mu) / sqrt(n - 1)
-    for(auto i = 0; i < y.size(); i++){
-        y[i] = ((double)input.vTests[1].img[i] - mu[i])
-               / sqrt(cantImagenesTotales - 1);
+    for (auto t : input.vTests){
+        vector<double> y (input.alto * input.ancho);
+
+        // y = (img - mu) / sqrt(n - 1)
+        for(auto i = 0; i < y.size(); i++){
+            y[i] = ((double)t.img[i] - mu[i])
+                   / sqrt(cantImagenesTotales - 1);
+        }
+
+        Punto p (t.persona,
+                 transformacionCaracteristica(autoCaras, y));
+
+        // k es par si cantPersonas impar, y viceversa
+        int k = (input.cantPersonas % 2 == 0) ? 5 : 6;
+        int p_class = kNN(X2, p, k, input.cantPersonas);
+        cerr << "persona " << t.persona << " -> "
+             << p_class << endl;
     }
-    p.coordenadas = transformacionCaracteristica(autoCaras, y);
-    int k = (input.cantPersonas % 2 == 0) ? 5 : 6;
-    cout << "persona: " << kNN(X2, p, k, input.cantPersonas) << endl;
+
+    // print componentes principales
+    for (auto ac : autoCaras){
+        cout << sqrt(ac.autoValor) << endl;
+    }
 
     return 0;
 }
