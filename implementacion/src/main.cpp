@@ -27,35 +27,40 @@ int main(int argc, char* argv[]){
         // sin argumentos hace Xt*X
         M = multiplicarXtX(X);
         autoCaras = obtenerAutoVV(M, input.cantComponentes);
-    } else {
-        if (string(argv[1]) == "--fast"){
-            // con --fast hace X*Xt y después Xt*autoVV
-            M = multiplicarXXt(X);
-            vector<EigenVV> autoVV = obtenerAutoVV(M, input.cantComponentes);
+    } else if (string(argv[1]) == "--fast"){
+        // con --fast hace X*Xt y después Xt*autoVV
+        M = multiplicarXXt(X);
+        vector<EigenVV> autoVV = obtenerAutoVV(M, input.cantComponentes);
 
-            // autoCaras_k = Xt*autoVV_k
-            for (auto k = 0; k < input.cantComponentes; k++){
-                autoCaras[k].autoValor = autoVV[k].autoValor;
-                autoCaras[k].autoVector.resize(X.columnas);
+        // autoCaras_k = Xt*autoVV_k
+        for (auto k = 0; k < input.cantComponentes; k++){
+            autoCaras[k].autoValor = autoVV[k].autoValor;
+            autoCaras[k].autoVector.resize(X.columnas);
 
-                for (auto j = 0; j < X.columnas; j++){
-                    double tmp = 0;
-                    for (auto i = 0; i < X.filas; i++){
-                        tmp += X.datos[i][j] * autoVV[k].autoVector[i];
-                    }
-                    autoCaras[k].autoVector[j] = tmp;
+            for (auto j = 0; j < X.columnas; j++){
+                double tmp = 0;
+                for (auto i = 0; i < X.filas; i++){
+                    tmp += X.datos[i][j] * autoVV[k].autoVector[i];
                 }
+                autoCaras[k].autoVector[j] = tmp;
             }
-        } else {
-            cout << "Uso: tp2 [--fast]\n\nOpción desconocida.";
-            return 1;
         }
+    } else {
+        cout << "Uso: tp2 [--fast]\n\nOpción desconocida.";
+        return 1;
     }
 
-    // normalizo autoCaras
-    for (auto& ac : autoCaras){
+    // normalizo autoCaras y las guardo en eigenfaces/
+    for (auto i = 0; i < autoCaras.size(); i++){
+        auto& ac = autoCaras[i];
         vectorPorEscalar(ac.autoVector, 1 / normaDos(ac.autoVector));
+
+        escribirImagen(vectorAImagen(ac.autoVector),
+                       input.ancho,
+                       input.alto,
+                       "eigenfaces/autocara" + to_string(i) + ".pgm");
     }
+
 
     // X2 = [ Punto( tc(x_i) , nro persona ) ]
     vector<Punto> X2 (cantImagenesTotales);
@@ -70,8 +75,11 @@ int main(int argc, char* argv[]){
         }
     }
 
+
+    // guardo X2 como persona,x1,x2,...,xn
     guardarCSV(X2, input.cantComponentes, "csv/X2.csv");
 
+    // para cada vTest, clasifico con kNN
     Punto p;
     p.persona = input.vTests[1].persona;
     vector<double> y (input.alto * input.ancho);
@@ -83,11 +91,6 @@ int main(int argc, char* argv[]){
     p.coordenadas = transformacionCaracteristica(autoCaras, y);
     int k = (input.cantPersonas % 2 == 0) ? 5 : 6;
     cout << "persona: " << kNN(X2, p, k, input.cantPersonas) << endl;
-
-    //escribirImagen(vectorAImagen(autoCaras[1].autoVector),
-    //               input.ancho,
-    //               input.alto,
-    //               "autocara2.pgm");
 
     return 0;
 }

@@ -41,15 +41,10 @@ imagen levantarImagen(string path){
     string version = vals[0];
     int width = stoi(vals[1]);
     int height = stoi(vals[2]);
-    // int maxVal = stoi(vals[3]);
 
     if(version.compare("P5") != 0){
         fail("No es P5");
     }
-
-    // cout << "Version: " << version << endl;
-    // cout << "Max val: " << maxVal << endl;
-    // cout << width << " columns and " << height << " rows" << endl;
 
     imagen imgData (height * width);
 
