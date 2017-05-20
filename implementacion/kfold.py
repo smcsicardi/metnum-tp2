@@ -1,5 +1,5 @@
 """
-Genera k folds de tamaño `size` y los guarda como fold{i}.in
+Genera k folds de tamaño `fold_size` y los guarda como fold{i}.in
 """
 
 from test_config import *
@@ -23,10 +23,11 @@ folds = list(chunks(imgs, fold_size))
 
 for i, fold in enumerate(folds):
     with open('tests/fold{}.in'.format(i), 'w') as f:
-        f.write('../data/ImagenesCarasRed/ 28 23 41 {} {}\n'.format(9 - size, pca_n))
+        f.write('../data/ImagenesCarasRed/ 28 23 {} {} {}\n'.format(
+            personas, imagenes - fold_size, pca_n))
         f.write('\n')
 
-        others = folds[0 : i] + folds[i+1 : int(imagenes/size)]
+        others = folds[0 : i] + folds[i+1 : int(imagenes/fold_size)]
         others_flat = [x for y in others for x in y]
 
         for p in range(personas):

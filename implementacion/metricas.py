@@ -28,7 +28,7 @@ def rate(k):
 def find_k_nn():
     """ Busca el mejor k para kNN basandose en el hitrate.
     """
-    for k in range(1, 16):
+    for k in range(1, 5):
         hitrate = rate(k)
         print('k={}'.format(k), hitrate)
 
