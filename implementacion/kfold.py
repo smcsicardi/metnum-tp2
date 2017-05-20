@@ -27,7 +27,7 @@ for i, fold in enumerate(folds):
             personas, imagenes - fold_size, pca_n))
         f.write('\n')
 
-        others = folds[0 : i] + folds[i+1 : int(imagenes/fold_size)]
+        others = folds[0 : i] + folds[i+1 : fold_count]
         others_flat = [x for y in others for x in y]
 
         for p in range(personas):
