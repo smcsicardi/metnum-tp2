@@ -3,14 +3,14 @@ CFLAGS=-Wall -Wpedantic -O2 -std=c++11
 SOURCES=$(wildcard src/lib/*.cpp)
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=tp2
-KFOLD=kfold
+TEST=test
 
 all: $(SOURCES) $(EXECUTABLE)
 
 rebuild: clean all
 
-$(KFOLD): src/kfold.cpp $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) src/kfold.cpp -o $@
+$(TEST): src/test.cpp $(OBJECTS)
+	$(CC) $(CFLAGS) $(OBJECTS) src/test.cpp -o $@
 
 $(EXECUTABLE): src/main.cpp $(OBJECTS)
 	$(CC) $(CFLAGS) $(OBJECTS) src/main.cpp -o $@
