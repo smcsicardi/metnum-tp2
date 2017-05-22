@@ -4,7 +4,7 @@ y reporta metricas.
 """
 
 from test_config import *
-import pandas as pd
+import numpy as np
 import subprocess
 import re
 
@@ -18,7 +18,8 @@ def execute(k):
         res = subprocess.check_output(["./test.sh", str(k), filename])
 
         for l in res.splitlines():
-            yield rgx.match(l.decode()).groups()
+            a, b = rgx.match(l.decode()).groups()
+            yield (int(a), int(b))
 
 
 def confusion_matrix(results):
@@ -26,14 +27,10 @@ def confusion_matrix(results):
         tuplas (real, pred).
         Asume las personas se indexan desde 1.
     """
-    l_real = []
-    l_pred = []
+    matrix = np.zeros((personas, personas))
     for real, pred in results:
-        l_real.append(real)
-        l_pred.append(pred)
-    series_real = pd.Series(l_real, name='Actual')
-    series_pred = pd.Series(l_pred, name='Predicted')
-    return pd.crosstab(series_real, series_pred, margins=True)
+        matrix[real-1, pred-1] += 1
+    return matrix
 
 
 def find_k_nn():
