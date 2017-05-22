@@ -33,19 +33,25 @@ def confusion_matrix(results):
     return matrix
 
 
+def stats(matrix):
+    """ Devuelve el promedio de precision, recall y hitrate
+        de cada persona.
+    """
+    diag = np.arange(personas)
+    precision = matrix[diag, diag] / np.sum(matrix, axis=0)
+    recall = matrix[diag, diag] / np.sum(matrix, axis=1)
+    hitrate = np.sum(matrix[diag, diag]) / np.sum(matrix)
+    return np.average(precision), np.average(recall), hitrate
+
 def find_k_nn():
     """ Busca el mejor k para kNN basandose en el hitrate (por ahora)
     """
-    for k in range(1, 5):
+    for k in range(1, 15):
         results = execute(k)
         matrix = confusion_matrix(results)
         # sumo la diagonal
-        correct = 0
-        for x in range(1, personas + 1):
-            correct += matrix[str(x)][str(x)]
-
-        total = matrix['All']['All']
-        print('k={}'.format(k), correct/total)
+        s = stats(matrix)
+        print('k={} -> '.format(k), s)
 
 if __name__ == '__main__':
     find_k_nn()
