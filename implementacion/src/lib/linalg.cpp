@@ -29,25 +29,39 @@ double prodInternoXtX(const Matriz& a, const Matriz& b, int i, int j, unsigned i
     return suma;
 }
 
-EigenVV metodoPotencia(const Matriz& B, int cantIter){
+EigenVV metodoPotencia(const Matriz& B){
     vector<double> v (B.filas, 1);
-
-    for(int i = 0; i < cantIter; i++){
-        // Calculo B*v
-        vector<double> b = matrizXVector(B, v);
-
-        // Lo normalizo
-        double norma = 1.00 / normaDos(b);
-        vectorPorEscalar(b, norma);
-        v = b;
-    }
-
-    // lambda = v^t * (B * v) / (v^t * v)
-    vector<double> Bv = matrizXVector(B, v);
-
+    vector<double> Bv;
+    vector<double> b;
+    double eps = 0.01;
+    double err = 1;
+    double norma;
     EigenVV e;
-    e.autoValor = prodInterno(Bv, v) / prodInterno(v, v);
-    e.autoVector = v;
+    int cantIter = 50;
+    int totalIter = 0;
+
+    while(err > eps){
+        for(int i = 0; i < cantIter; i++){
+            // Calculo B*v
+            b = matrizXVector(B, v);
+
+            // Lo normalizo
+            norma = 1.00 / normaDos(b);
+            vectorPorEscalar(b, norma);
+            v = b;
+        }
+        // lambda = v^t * (B * v) / (v^t * v)
+        Bv = matrizXVector(B, v);
+        e.autoValor = prodInterno(Bv, v) / prodInterno(v, v);
+        e.autoVector = v;
+        vector<double> resi(Bv.size());
+        for (int i = 0; i < Bv.size(); ++i){
+            resi[i] = Bv[i] - e.autoValor*e.autoVector[i];
+        } 
+        err = normaDos(resi);
+        totalIter++;
+    }
+    //cout << "Las iteraciones que hizo son " << totalIter*50 << endl;
     return e;
 }
 
@@ -154,8 +168,7 @@ vector<EigenVV> obtenerAutoVV(Matriz& M, int cantComponentes){
     vector<EigenVV> ac(cantComponentes);
 
     for(auto i = 0; i < cantComponentes; i++){
-        // TODO ver criterio de parada
-        ac[i] = metodoPotencia(M, 100);
+        ac[i] = metodoPotencia(M);
         deflacion(M, ac[i]);
     }
 
