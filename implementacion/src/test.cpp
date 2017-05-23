@@ -33,7 +33,8 @@ int main(int argc, char* argv[]){
     Matriz M = multiplicarXtX(X);
     vector<EigenVV> autoCaras = obtenerAutoVV(M, input.cantComponentes);
 
-    // X2 = [ Punto( tc(x_i) , nro persona ) ]
+    // X2 tiene los datos originales transformados y clasificados
+    // X2 = [ Punto< tc(x_i), nro persona > ]
     vector<Punto> X2 (cantImagenesTotales);
 
     int n = 0;
