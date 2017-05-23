@@ -30,6 +30,9 @@ double prodInternoXtX(const Matriz& a, const Matriz& b, int i, int j, unsigned i
 }
 
 EigenVV metodoPotencia(const Matriz& B){
+    /* Corre 50 iteraciones del método y calcula el residuo y el error.
+     * Si es menor a 0.01 termina, sino repite.
+     */
     vector<double> v (B.filas, 1);
     vector<double> Bv;
     vector<double> b;
@@ -38,9 +41,10 @@ EigenVV metodoPotencia(const Matriz& B){
     double norma;
     EigenVV e;
     int cantIter = 50;
-    int totalIter = 0;
 
     while(err > eps){
+        // hago 50 iteraciones sin
+        // calcular `err` para ahorrar
         for(int i = 0; i < cantIter; i++){
             // Calculo B*v
             b = matrizXVector(B, v);
@@ -54,14 +58,14 @@ EigenVV metodoPotencia(const Matriz& B){
         Bv = matrizXVector(B, v);
         e.autoValor = prodInterno(Bv, v) / prodInterno(v, v);
         e.autoVector = v;
-        vector<double> resi(Bv.size());
+
+        // calculo el residuo y el `err`
+        vector<double> resi (Bv.size());
         for (int i = 0; i < Bv.size(); ++i){
             resi[i] = Bv[i] - e.autoValor*e.autoVector[i];
-        } 
+        }
         err = normaDos(resi);
-        totalIter++;
     }
-    //cout << "Las iteraciones que hizo son " << totalIter*50 << endl;
     return e;
 }
 
