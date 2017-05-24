@@ -54,6 +54,7 @@ def stats(matrix):
     hitrate = np.sum(matrix[diag, diag]) / np.sum(matrix)
     return precision, recall, hitrate
 
+
 def find_k_nn():
     """ Busca el mejor k para kNN basandose en el hitrate (por ahora)
     """
@@ -63,6 +64,7 @@ def find_k_nn():
         # sumo la diagonal
         s = stats(matrix)
         print('k={} -> '.format(k), s)
+
 
 if __name__ == '__main__':
     find_k_nn()
