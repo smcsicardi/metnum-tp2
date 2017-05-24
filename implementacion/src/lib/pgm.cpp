@@ -19,7 +19,7 @@ imagen levantarImagen(string path){
         fail("Unable to open file: \"" + path + "\".");
     }
 
-    // los 4 valores que tiene el header: version w h maxVal
+    // los 4 valores que tiene el header: [version, w, h, maxVal]
     vector<string> vals (4);
     int count = 0;
     while (count < 4) {
