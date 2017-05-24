@@ -108,7 +108,7 @@ vector<double> transformacionCaracteristica(const vector<EigenVV>& ac,
                                             const vector<double>& x){
     vector<double> tc (ac.size());
 
-    for(auto i = 0; i < ac.size(); i++){
+    for(unsigned int i = 0; i < ac.size(); i++){
         tc[i] = prodInterno(ac[i].autoVector, x);
     }
 

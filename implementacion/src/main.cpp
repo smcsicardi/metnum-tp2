@@ -50,7 +50,7 @@ int main(int argc, char* argv[]){
     }
 
     // normalizo autoCaras y las guardo en eigenfaces/
-    for (auto i = 0; i < autoCaras.size(); i++){
+    for (unsigned int i = 0; i < autoCaras.size(); i++){
         auto& ac = autoCaras[i];
         vectorPorEscalar(ac.autoVector, 1 / normaDos(ac.autoVector));
 
