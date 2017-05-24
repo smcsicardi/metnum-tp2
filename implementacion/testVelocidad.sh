@@ -1,9 +1,9 @@
 # TEST DE VELOCIDAD DE LAS MATRICES M Y M-MOÑO
 
 rm testVelocidadGrandeRes.csv
-rm testVelocidadChicoRes.csv
+# rm testVelocidadChicoRes.csv
 touch testVelocidadGrandeRes.csv
-touch testVelocidadChicoRes.csv
+# touch testVelocidadChicoRes.csv
 
 # Genero los tests
 python generarTestsVelocidad.py
