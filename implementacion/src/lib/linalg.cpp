@@ -55,7 +55,7 @@ EigenVV metodoPotencia(const Matriz& B){
         e.autoValor = prodInterno(Bv, v) / prodInterno(v, v);
         e.autoVector = v;
         vector<double> resi(Bv.size());
-        for (int i = 0; i < Bv.size(); ++i){
+        for (unsigned int i = 0; i < Bv.size(); ++i){
             resi[i] = Bv[i] - e.autoValor*e.autoVector[i];
         } 
         err = normaDos(resi);
@@ -115,7 +115,7 @@ double prodInterno(const vector<double>& v1, const vector<double>& v2){
     }
 
     double suma = 0;
-    for(auto i = 0; i < v1.size(); i++){
+    for(unsigned int i = 0; i < v1.size(); i++){
         suma += v1[i] * v2[i];
     }
 

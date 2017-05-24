@@ -71,7 +71,7 @@ void guardarCSV(const vector<Punto>& X, int dimension, string path){
     outfile << endl;
 
     // y cada fila
-    for (auto i = 0; i < X.size(); i++){
+    for (unsigned int i = 0; i < X.size(); i++){
         outfile << X[i].persona << ",";
         for (auto j = 1; j <= dimension; j++){
             outfile << X[i].coordenadas[j]

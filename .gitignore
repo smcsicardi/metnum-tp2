@@ -127,3 +127,6 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# test que no hace falta subir porque los genero
+implementacion/tests/testVelocidad*

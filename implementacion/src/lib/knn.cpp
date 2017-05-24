@@ -10,7 +10,7 @@ int kNN(const vector<Punto>& X2, const Punto& y, int k, int clases){
     vector<pair<int, double>> distancias (X2.size());
 
     // distancias_i = || y - X2_i ||
-    for(auto i = 0; i < distancias.size(); i++){
+    for(unsigned int i = 0; i < distancias.size(); i++){
         double dist = 0;
         for (auto j = 0; j < n; j++){
             dist += pow(X2[i].coordenadas[j] - y.coordenadas[j], 2);
