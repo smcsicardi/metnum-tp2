@@ -1,7 +1,7 @@
 import random
 
 def strImagenes(cant):
-    res = ""
+    res = "/"
     for i in range(cant):
         res += (" " + str(i+1))
 
