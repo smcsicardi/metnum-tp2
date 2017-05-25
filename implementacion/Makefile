@@ -4,6 +4,7 @@ SOURCES=$(wildcard src/lib/*.cpp)
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=tp2
 TEST=test
+TESTCTR=testctr
 TESTVELOCIDAD=testvelocidad
 
 all: $(SOURCES) $(EXECUTABLE)
@@ -12,6 +13,9 @@ rebuild: clean all
 
 $(TEST): src/test.cpp $(OBJECTS)
 	$(CC) $(CFLAGS) $(OBJECTS) src/test.cpp -o $@
+
+$(TESTCTR): src/testCtr.cpp $(OBJECTS)
+	$(CC) $(CFLAGS) $(OBJECTS) src/testCtr.cpp -o $@
 
 $(EXECUTABLE): src/main.cpp $(OBJECTS)
 	$(CC) $(CFLAGS) $(OBJECTS) src/main.cpp -o $@
