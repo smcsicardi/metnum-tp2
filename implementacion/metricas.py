@@ -149,7 +149,3 @@ def gamma_vs_k():
                 hr, pr = stats_avg(m)
                 f.write('{},{},{}'.format(hr, g, k))
                 f.write('\n')
-
-
-if __name__ == '__main__':
-    find_k_nn()
