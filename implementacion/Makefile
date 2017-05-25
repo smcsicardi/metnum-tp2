@@ -28,6 +28,3 @@ $(TESTVELOCIDAD): src/testVelocidad.cpp $(OBJECTS)
 
 clean:
 	rm $(OBJECTS)
-	rm $(EXECUTABLE)
-	rm $(TEST)
-	rm $(TESTVELOCIDAD)
