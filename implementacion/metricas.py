@@ -3,8 +3,10 @@ Corre `tests` n veces, una para cada tests/fold{i}.in
 y reporta metricas.
 """
 
+import time
 from test_config import *
 import numpy as np
+import kfold
 import subprocess
 import re
 
@@ -33,8 +35,45 @@ def confusion_matrix(results):
     return matrix
 
 
-def stats(matrix):
-    """ Devuelve el promedio de precision, recall y hitrate
+def stats_hitrate():
+    diag = np.arange(personas)
+    with open('csv/hitrate_ambos.csv', 'w') as f:
+        f.write('imagenes,hitrate,componentes,k')
+        f.write('\n')
+        diag = np.arange(personas)
+        for g in [15,25,35]:
+            for k in [1,5,10]:
+                kfold.generate(g)
+
+                r = execute(k)
+                m = confusion_matrix(r)
+                hitrate = m[diag, diag] / imagenes
+                for h in hitrate:
+                    f.write('{},{},{},{}'.format(imagenes-fold_size,h, g, k))
+                    f.write('\n')
+
+
+
+def stats_precision():
+    with open('csv/precision.csv', 'w') as f:
+        f.write('precision,componentes,k')
+        f.write('\n')
+        diag = np.arange(personas)
+        for g in [15,25,35]:
+            for k in [1,5,10]:
+                kfold.generate(g)
+
+                r = execute(k)
+                m = confusion_matrix(r)
+                precision = m[diag, diag] / np.sum(m, axis=1)
+                for p in precision:
+                    f.write('{},{},{}'.format(p, g, k))
+                    f.write('\n')
+
+
+
+def stats_avg(matrix):
+    """ Devuelve el promedio de precision y hitrate
         de cada persona.
         Precision puede tener denominador 0 por lo que
         saco esos casos del promedio.
@@ -50,9 +89,8 @@ def stats(matrix):
         count += 1
     precision = precision / count
 
-    recall = np.average(matrix[diag, diag] / np.sum(matrix, axis=1))
     hitrate = np.sum(matrix[diag, diag]) / np.sum(matrix)
-    return precision, recall, hitrate
+    return hitrate, precision
 
 
 def find_k_nn():
@@ -66,5 +104,48 @@ def find_k_nn():
         print('k={} -> '.format(k), s)
 
 
-if __name__ == '__main__':
-    find_k_nn()
+def gamma_vs_time():
+    with open('csv/times.csv', 'w') as f:
+        f.write('time,componentes')
+        f.write('\n')
+        for g in np.arange(1, 40, 4):
+            kfold.generate(g)
+
+            r = execute(1)
+            start = time.time()
+            list(r)
+            end = time.time()
+
+            f.write('{},{}'.format(end-start, g))
+            f.write('\n')
+
+
+def todo_vs_gamma():
+    with open('csv/todo2.csv', 'w') as f:
+        f.write('hitrate,precision,componentes')
+        f.write('\n')
+        for g in [100, 120]:
+
+            kfold.generate(g)
+
+            r = execute(1)
+            m = confusion_matrix(r)
+            hr, pr = stats_avg(m)
+            f.write('{},{},{}'.format(hr, pr, g))
+            f.write('\n')
+
+
+def gamma_vs_k():
+    with open('csv/hitrates.csv', 'w') as f:
+        f.write('hitrate,componentes,k')
+        f.write('\n')
+        for g in [1, 5, 10, 15]:
+            for k in np.arange(1, 20, 2):
+
+                kfold.generate(g)
+
+                r = execute(k)
+                m = confusion_matrix(r)
+                hr, pr = stats_avg(m)
+                f.write('{},{},{}'.format(hr, g, k))
+                f.write('\n')
